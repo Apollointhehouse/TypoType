@@ -1,6 +1,6 @@
 import { LetterState } from "../enums/enums";
 
-export class Letter {
+export class LetterModel {
     value: string;
     state: LetterState;
 
