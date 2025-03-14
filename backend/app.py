@@ -3,7 +3,6 @@ from flask import Flask
 import sqlite3
 
 app = Flask(__name__)
-settings = Settings()
 
 @app.route("/")
 def hello_world() -> str:
@@ -32,4 +31,4 @@ def login(id, user):
 def about(user):
     return
 
-@app.get("/api/user")
+# @app.get("/api/user")
