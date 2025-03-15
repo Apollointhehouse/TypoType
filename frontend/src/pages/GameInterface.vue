@@ -9,6 +9,7 @@ import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
 
 // Get game data and input handler from utils
 const {
+  prompt,
   userInput,
   progress,
   computeScore,
@@ -30,6 +31,7 @@ function onTimeUp() {
 const { timeLeft, startTimer, stopTimer, resetTimer } = useTimer(onTimeUp);
 
 function restartGame() {
+  fetchPrompt();
   stopTimer();
   userInput.value = '';
   resetTimer();
@@ -57,7 +59,7 @@ onBeforeUnmount(() => {
     </div>
     <!-- Word List Display -->
     <div>
-      <WordList :value="data" :key="userInput.length" />
+      <WordList :value="data" :key="`${userInput.length},${prompt.length}`" />
     </div>
     <!-- Restart button -->
     <span class="group flex justify-center">
