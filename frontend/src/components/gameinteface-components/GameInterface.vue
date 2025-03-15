@@ -10,11 +10,31 @@ import Footer from '../footer-components/Footer.vue';
 
 const TIME_LIMIT = 60;
 
+const prompt = ref<string>('');
+
+const getPrompt = async () =>{
+    const response = await fetch('http://localhost:5000/api/prompts')
+    const json = await response.json()
+    prompt.value = json['text']
+}
+
+interface Dic {
+    [key: string]: string
+}
+const keys = ref<Dic>({});
+
+const getKeys = async () =>{
+    const response = await fetch('http://localhost:5000/api/keymaps')
+    keys.value = await response.json()
+}
+
+// Reactive variable to store the current word being typed
 const userInput = ref<string>("");
 const prompt = {value: DummyPrompt};
 
 // List to store completed words
 const data = computed<WordModel[]>(() => {
+  // const promptWords = await getPrompt()
   const promptList = prompt.value.split(" ");
   return processData(userInput.value.split(" "), promptList);
 });
@@ -62,13 +82,19 @@ function handleInput(event: KeyboardEvent) {
     userInput.value = userInput.value.slice(0, -1);
   } else if (/^[a-zA-Z0-9\s.,!?;:'"(){}[\]<>@#$%^&*-_=+|\\/~`€¢€]$/.test(key)) {
     // Add alphanumeric characters (letters and numbers) to the current word
-    userInput.value += key;
-    lastInput = key;
+    const is_upper = key !== key.toLowerCase()
+    if (key.toLowerCase() in keys.value){
+      userInput.value += is_upper ? keys.value[key.toLowerCase()].toUpperCase() : keys.value[key.toLowerCase()];
+    } else {
+      userInput.value += key;
+    }
   }
 }
 
 onMounted(() => {
   document.addEventListener('keydown', handleInput);
+  getPrompt();
+  getKeys();
   startTimer();
 });
 
