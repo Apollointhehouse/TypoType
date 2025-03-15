@@ -24,8 +24,8 @@ function getStateClass(state: WordState): string {
         <template v-for="(letter, index) in letters" :key="index">
             <Letter :value="letter" />
         </template>
-        {{ " " }}
     </span>
+    {{ " " }}
 </template>
 
 <style scoped></style>
