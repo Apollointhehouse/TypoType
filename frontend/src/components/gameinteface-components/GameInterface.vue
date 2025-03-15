@@ -1,16 +1,29 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {processData} from '../../utils/DataProcessor';
-import {DummyPromptList} from '../../enums/DummyPrompt';
+// import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
 
-const promptList = DummyPromptList;
+// const promptList = await DummyPromptList;
+
+const prompt = ref<string>('');
+
+const getPrompt = async () =>{
+    const response = await fetch('http://localhost:5000/prompts')
+    prompt.value = await response.text()
+    
+    // console.log(prompt.split(" "))
+    // return prompt.split(" ")
+}
+
 // Reactive variable to store the current word being typed
 const userInput = ref<string>("");
 
 // List to store completed words
 const data = computed<WordModel[]>(() => {
+  // const promptWords = await getPrompt()
+  const promptList = prompt.value.split(" ");
   return processData(userInput.value.split(" "), promptList);
 });
 
@@ -28,6 +41,7 @@ function handleInput(event: KeyboardEvent) {
 
 onMounted(() => {
   document.addEventListener('keydown', handleInput);
+  getPrompt();
 });
 
 onBeforeUnmount(() => {
