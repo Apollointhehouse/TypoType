@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Letter from './Letter.vue';
 import { WordModel } from '../../../models/Word';
-import { WordState } from '../../../enums/enums';
+import { WordState } from '../../../enums/Enums';
 const props = defineProps<{ value: WordModel }>();
 
 const { letters, state } = props.value;
@@ -24,8 +24,8 @@ function getStateClass(state: WordState): string {
         <template v-for="(letter, index) in letters" :key="index">
             <Letter :value="letter" />
         </template>
-        {{ " " }}
     </span>
+    {{ " " }}
 </template>
 
 <style scoped></style>

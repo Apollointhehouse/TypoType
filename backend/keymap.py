@@ -1,37 +1,17 @@
 import random
 
-key_map = {
-    "a": "",
-    "b": "",
-    "c": "",
-    "d": "",
-    "e": "",
-    "f": "",
-    "g": "",
-    "h": "",
-    "i": "",
-    "j": "",
-    "k": "",
-    "l": "",
-    "m": "",
-    "n": "",
-    "o": "",
-    "p": "",
-    "q": "",
-    "r": "",
-    "s": "",
-    "t": "",
-    "u": "",
-    "v": "",
-    "w": "",
-    "x": "",
-    "y": "",
-    "z": "",
-}
 
-def get_keymap():
+key_map = {}
+
+def generate_keymap():
     # Generates keys based on ASCII
     key_list = [chr(i) for i in range(97, 123)]
+
+    # Generates the dictionary
+    for v in key_list:
+        key_map[v] = ""
+
+    # Shuffles the alphabet for dictionary values
     random.shuffle(key_list)
 
     # Maps the shuffled keys into the dictionary
@@ -41,7 +21,8 @@ def get_keymap():
         iteration += 1
     return key_map
 
+
 # To check the keys and values assignment
- 
+#get_keymap()
 #for i in key_map:
 #    print(f"Key: {i} | Value: {key_map[i]}")
