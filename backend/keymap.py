@@ -29,15 +29,17 @@ key_map = {
     "z": "",
 }
 
-# Generates keys based on ASCII
-key_list = [chr(i) for i in range(97, 123)]
-random.shuffle(key_list)
+def get_keymap():
+    # Generates keys based on ASCII
+    key_list = [chr(i) for i in range(97, 123)]
+    random.shuffle(key_list)
 
-# Maps the shuffled keys into the dictionary
-iteration = 0
-for keys in key_map:
-    key_map[keys] = key_list[iteration]
-    iteration += 1
+    # Maps the shuffled keys into the dictionary
+    iteration = 0
+    for keys in key_map:
+        key_map[keys] = key_list[iteration]
+        iteration += 1
+    return key_map
 
 # To check the keys and values assignment
  

@@ -1,7 +1,11 @@
-from flask import Flask, request
-
+from flask import Flask, request, Response
 import db
+import os
+import secrets
+import json
+
 from User import User
+from keymap import get_keymap
 
 app = Flask(__name__)
 
@@ -11,15 +15,26 @@ db.setup_db()
 def hello_world() -> str:
     return "<p>Hello, World!</p>"
 
-@app.route("/api")
-def api_docs() -> str:
-    return "Nothing Yet!"
+@app.route("/prompts", methods=["GET"])
+def get_random_prompt():
+    files = os.listdir('prompts')
+    file = secrets.choice(files)
+    with open(f'prompts/{file}', 'r') as f:
+        output = f.read()
+    return Response(output, status=200)
 
+@app.route("/keymaps", methods=["GET"])
+def get_keymap():
+    keymap = get_keymap()
+    return Response(json.dumps(keymap), status=200)
 
-@app.get("/api/img_gen/")
-def prompt() -> str:
-    return "foo"
+@app.route("/scores", methods=["POST"])
+def post_score():
+    return Response(request.get_json(), status=201)
 
+@app.route("/highscores", methods=["GET"])
+def get_highscores():
+    return Response(json.dumps([{"name": 'Bob', "wpm":1}, {"name": 'Jack', "wpm":3}, {"name": 'Fern', "wpm":32}, {"name": 'Asley', "wpm":13}]), status=201)
 
 # User
 @app.post("/api/user/login")
