@@ -1,13 +1,31 @@
 <script setup lang="ts">
 import Letter from './Letter.vue';
-import { LetterModel } from '../../../models/Letter';
-import { LetterState } from '../../../enums/enums';
+import { WordModel } from '../../../models/Word';
+import { WordState } from '../../../enums/enums';
+const props = defineProps<{ value: WordModel }>();
 
-const testLetter = new LetterModel('A', LetterState.MISSING);
+const { letters, state } = props.value;
+
+function getStateClass(state: WordState): string {
+    switch (state) {
+        case WordState.INCORRECT:
+            return 'text-decoration-line: underline';
+        case WordState.CORRECT:
+        case WordState.IN_PROGRESS:
+        default:
+            return '';
+    }
+}
+
 </script>
 
 <template>
-    <Letter :value="testLetter" />
+    <span :class="getStateClass(state)">
+        <template v-for="(letter, index) in letters" :key="index">
+            <Letter :value="letter" />
+        </template>
+        {{ " " }}
+    </span>
 </template>
 
 <style scoped></style>
