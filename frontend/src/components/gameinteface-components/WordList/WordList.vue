@@ -3,7 +3,6 @@ import { WordModel } from '../../../models/Word';
 import Word from './Word.vue';
 
 const props = defineProps<{ value: WordModel[] }>();
-console.log(props)
 
 </script>
 
