@@ -4,7 +4,9 @@ import {processData} from '../../utils/DataProcessor';
 import {DummyPrompt} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
-import {WordState} from '../../enums/enums';
+import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
+
+const TIME_LIMIT = 30;
 
 const userInput = ref<string>("");
 const prompt = {value: DummyPrompt};
@@ -20,6 +22,31 @@ const progress = computed<{current: number, total: number}>(() => {
   const promptList = prompt.value.split(" ");
   return {current: userInputList.length - 1, total: promptList.length};
 });
+
+const timeLeft = ref<number>(TIME_LIMIT);
+const timerReference = ref<number>();
+
+const startTimer = () => {
+  timerReference.value = setInterval(() => {
+    if (timeLeft.value > 0) {
+      timeLeft.value--;
+    } else {
+      stopTimer(); // Stop the timer once it reaches 0
+      window.alert("Time's up!");
+    }
+  }, 1000); // Update every second
+};
+
+const stopTimer = () => {
+  clearInterval(timerReference.value);
+};
+
+const restart = () => {
+  stopTimer();
+  timeLeft.value = TIME_LIMIT;
+  userInput.value = "";
+  startTimer();
+}
 
 // Function to handle input changes
 let lastInput = " ";
@@ -40,6 +67,7 @@ function handleInput(event: KeyboardEvent) {
 
 onMounted(() => {
   document.addEventListener('keydown', handleInput);
+  startTimer();
 });
 
 onBeforeUnmount(() => {
@@ -48,11 +76,21 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col justify-start gap-10 text-2xl">
     <!-- Display the current word and completed words -->
     <!-- <div>{{ userInput }}</div> -->
-    <div>{{ progress.current }} / {{ progress.total }}</div>
-    <WordList :value="data" :key="userInput.length"/>
+     <div class="flex flex-col gap-2">
+       <div>{{ timeLeft }}</div>
+       <div>{{ progress.current }} / {{ progress.total }}</div>
+    </div>
+    <div>
+      <WordList :value="data" :key="userInput.length"/>
+    </div>
+    <span class="group flex justify-center">
+      <svg @click="restart" width="30" height="30" fill="currentColor" class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300">
+        <use :href="`${BootstrapIcons}#arrow-clockwise`" />
+      </svg>
+    </span> 
   </div>
 </template>
 
