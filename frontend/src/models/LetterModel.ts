@@ -1,4 +1,4 @@
-import { LetterState } from "../enums/enums";
+import { LetterState } from "@/constants/enums";
 
 export class LetterModel {
     value: string;
