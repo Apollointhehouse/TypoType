@@ -1,6 +1,10 @@
 import { LetterState } from "../enums/enums";
 
+<<<<<<< HEAD
 export class Letter {
+=======
+export class LetterModel {
+>>>>>>> jxav22-frontend
     value: string;
     state: LetterState;
 
