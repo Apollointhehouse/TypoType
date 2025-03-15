@@ -12,10 +12,7 @@ const openScoreModal = () => {
   showScoreModal.value = true;
 };
 
-const closeScoreModal = () => {
-  console.log("cancelling the save");
-  showScoreModal.value = false;
-};
+
 </script>
 
 <template>

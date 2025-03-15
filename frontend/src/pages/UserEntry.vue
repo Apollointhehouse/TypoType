@@ -10,19 +10,14 @@ const openModal = () => {
   console.log("Opening modal");
   showModal.value = true;
 };
-
-const closeModal = () => {
-  console.log("Closing modal");
-  showModal.value = false;
-};
 </script>
 
 <template>
   <!-- ✅ Connect modal visibility state -->
   <UserModal v-model="showModal" />
-  
+
   <h1>Test your Might!</h1>
-  
+
   <!-- ✅ Ensure button triggers modal -->
   <StartButton @click="openModal" />
 </template>
