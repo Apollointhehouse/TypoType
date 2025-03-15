@@ -8,10 +8,11 @@ const { value, state } = props.value;
 </script>
 
 <template>
+    <!-- TODO: EXTRACT THEMING INTO GLOBAL ENUMS -->
     <span v-if="state === LetterState.CORRECT" class="text-stone-50">{{ value }}</span>
     <span v-else-if="state === LetterState.INCORRECT" class="text-red-400">{{ value }}</span>
     <span v-else-if="state === LetterState.MISSING" class="text-grey-500">{{ value }}</span>
-    <span v-else-if="state === LetterState.EXTRA" class="text-red-950">{{ value }}</span>
+    <span v-else-if="state === LetterState.EXTRA" class="text-red-700">{{ value }}</span>
 </template>
 
 <style scoped></style>

@@ -2,12 +2,13 @@
 // import HelloWorld from "./components/HelloWorld.vue";
 // import TextPrompt from "./components/textprompt/TextPrompt.vue";
 // import UserEntry from "./components/userentry/UserEntry.vue";
-import Output from './components/gameinteface-components/Output.vue';
+// import Output from './components/gameinteface-components/Output.vue';
+import GameInterface from './components/gameinteface-components/GameInterface.vue';
 </script>
 
 <template>
-  <Output />
-  <!-- <GameInterface /> -->
+  <!-- <Output /> -->
+  <GameInterface />
   <!-- <HelloWorld msg="Test Your Might" />
   <UserEntry />
   <TextPrompt /> -->

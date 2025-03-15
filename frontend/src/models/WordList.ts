@@ -1,14 +1,14 @@
-import { Word } from "./Word";
+import { WordModel } from "./Word";
 
 export class WordList {
-    words: Word[];
+    words: WordModel[];
 
-    constructor(words: Word[]) {
+    constructor(words: WordModel[]) {
         this.words = words
     }
 
     // Method to change the state
-    setWords(words: Word[]) {
+    setWords(words: WordModel[]) {
         this.words = words;
     }
 }

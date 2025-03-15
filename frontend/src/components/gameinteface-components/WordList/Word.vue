@@ -9,7 +9,7 @@ const { letters, state } = props.value;
 function getStateClass(state: WordState): string {
     switch (state) {
         case WordState.INCORRECT:
-            return 'text-decoration-line: underline';
+            return 'underline decoration-red-400';
         case WordState.CORRECT:
         case WordState.IN_PROGRESS:
         default:
