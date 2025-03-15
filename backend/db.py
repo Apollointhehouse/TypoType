@@ -1,14 +1,9 @@
-import sqlite3
-
-def setup_db():
+def setup_db(con, cur):
     try:
-        con = sqlite3.connect("data.db")
-
-        cur = con.cursor()
-
-        cur.execute("CREATE TABLE user(id, name)")
-        cur.execute("CREATE TABLE score(id, value, timestamp)")
-    except:
+        cur.execute("CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR)")
+        cur.execute("CREATE TABLE scores(id INT, score INT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+    except Exception as e:
         print("Failed to setup database!")
+        print(e)
 
 
