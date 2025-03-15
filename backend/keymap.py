@@ -1,8 +1,9 @@
 import random
 
+
 key_map = {}
 
-def get_keymap():
+def generate_keymap():
     # Generates keys based on ASCII
     key_list = [chr(i) for i in range(97, 123)]
 
@@ -22,6 +23,6 @@ def get_keymap():
 
 
 # To check the keys and values assignment
-get_keymap()
-for i in key_map:
-    print(f"Key: {i} | Value: {key_map[i]}")
+#get_keymap()
+#for i in key_map:
+#    print(f"Key: {i} | Value: {key_map[i]}")
