@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
-import {processData} from '../../utils/DataProcessor';
+import {processData} from '../../utils/DataPreprocessor';
 import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 
@@ -9,11 +9,9 @@ const promptList = DummyPromptList;
 const userInput = ref<string>("");
 
 // List to store completed words
-const wordList = ref<string[]>([]);
 const data = computed(() => {
   return processData(userInput.value.split(" "), promptList);
 });
-
 
 // Function to handle input changes
 function handleInput(event: KeyboardEvent) {
@@ -39,7 +37,7 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <!-- Display the current word and completed words -->
-    <div>{{ userInput }}</div>
+    <!-- <div>{{ userInput }}</div> -->
     <WordList :value="data" :key="userInput.length"/>
   </div>
 </template>

@@ -52,8 +52,9 @@ export const processWord = (input: string, prompt: string): WordModel => {
             categorizedLetters.push(new LetterModel(inputChar, LetterState.INCORRECT));
             promptPointer = promptIterable.next();
         }
-    }
 
+    }
+        
     while (!promptPointer.done) {
         categorizedLetters.push(new LetterModel(promptPointer.value, LetterState.MISSING));
         promptPointer = promptIterable.next();
