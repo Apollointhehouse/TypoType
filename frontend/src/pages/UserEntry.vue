@@ -18,11 +18,10 @@ const closeModal = () => {
 </script>
 
 <template>
-  <!-- ✅ Connect modal visibility state -->
   <UserModal v-model="showModal" />
   
   <h1>Test your Might!</h1>
   
-  <!-- ✅ Ensure button triggers modal -->
+  <!-- Ensure button triggers modal -->
   <StartButton @click="openModal" />
 </template>
