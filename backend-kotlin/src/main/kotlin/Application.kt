@@ -6,7 +6,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = 5001) {
+    embeddedServer(Netty, port = 5000) {
         routing {
             module()
         }

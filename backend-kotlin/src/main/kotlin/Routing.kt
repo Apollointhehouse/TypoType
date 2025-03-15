@@ -2,12 +2,13 @@ package me.apollointhehouse
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.receive
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.io.File
 
 // Generates keys based on ASCII
-val chars  = ('a'..'z')
+val chars  = 'a'..'z'
 
 // Maps the shuffled keys into the dictionary
 val keyMap get() =
@@ -25,16 +26,12 @@ fun Application.configureRouting() {
             call.respond(keyMap)
         }
 
-        post("/captcha") {
-            call.respond(HttpStatusCode.Created)
+        post("/api/captcha") {
+            call.respond(captcha)
         }
 
-        get("/captcha") {
-
-
+        get("/api/captcha") {
+            call.respond(checkCaptcha(call.receive()))
         }
-//        def verify_captcha(input_captcha):
-//        return check_captcha(input_captcha)
-
     }
 }
