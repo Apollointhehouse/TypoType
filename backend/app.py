@@ -34,7 +34,6 @@ def post_score():
     try:
         data = request.get_json()
 
-
         res = cur.execute(f"INSERT INTO scores (id, score) values ({data.get('id')}, {data.get('score')})")
         con.commit()
         
@@ -47,7 +46,8 @@ def post_score():
 
 @app.route("/highscores", methods=["GET"])
 def get_highscores():
-    print(cur.execute("SELECT * FROM scores").fetchall())
-    return Response(json.dumps([{"name": 'Bob', "wpm":1}, {"name": 'Jack', "wpm":3}, {"name": 'Fern', "wpm":32}, {"name": 'Asley', "wpm":13}]), status=201)
+    cur.execute("SELECT * FROM scores")
+    all_records = cur.fetchall()
+    return Response(json.dumps(all_records), status=201)
 
 # User
