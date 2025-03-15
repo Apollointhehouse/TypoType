@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+from flask_cors import CORS 
 import db
 import os
 import secrets
@@ -9,6 +10,7 @@ from captcha import generate_captcha
 from captcha import check_captcha
 
 app = Flask(__name__)
+CORS(app)
 
 con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
@@ -21,7 +23,7 @@ def get_random_prompt():
     file = secrets.choice(files)
     with open(f'prompts/{file}', 'r') as f:
         output = f.read()
-    return Response(output, status=200)
+    return Response(json.dumps({"text":output}), status=200)
 
 @app.route("/api/keymaps", methods=["GET"])
 def get_keymap():
@@ -42,7 +44,7 @@ def post_score():
 
 @app.route("/api/scores", methods=["GET"])
 def get_highscores():
-    cur.execute("SELECT * FROM scores")
+    cur.execute("SELECT * FROM scores ORDER BY score LIMIT 20")
     all_records = cur.fetchall()
     return Response(json.dumps(all_records), status=201)
 # Users
