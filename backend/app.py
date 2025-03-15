@@ -21,7 +21,8 @@ def get_random_prompt():
     file = secrets.choice(files)
     with open(f'prompts/{file}', 'r') as f:
         output = f.read()
-    return Response(output, status=200)
+    print(output)
+    return Response(json.dumps({"text":output}), status=200)
 
 @app.route("/api/keymaps", methods=["GET"])
 def get_keymap():

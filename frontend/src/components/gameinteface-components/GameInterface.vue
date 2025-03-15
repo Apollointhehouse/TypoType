@@ -8,7 +8,7 @@ const prompt = ref<string>('');
 
 const getPrompt = async () =>{
     const response = await fetch('http://localhost:5000/api/prompts')
-    prompt.value = await response.text()
+    prompt.value = (await response.json()).get('text')
 }
 
 interface Dic {
