@@ -8,21 +8,36 @@ function getValueOrEmpty(result: IteratorResult<string>): string {
     return result.done ? "" : result.value;
 }
 
-export const processPrompt = (prompt: string): { promptList: string[]; lineBreaks: number[] } => {
-  let promptList: string[] = prompt.split(" "); // [];
-  let lineBreaks: number[] = [];
+export const identifyLineBreaks = (prompt: string): number[] => {
+    const lineBreaks: number[] = [];
+    let cumulativeWords = 0;
+    let inWord = false;
 
-//   let lineBreakSegments = prompt.split('\n\n');
-//   let wordsBeforeBreak = 0;
+    // Iterate over every character in the prompt.
+    for (let char of prompt) {
+        if (char === "\n") {
+            // Record the current word count at each newline.
+            lineBreaks.push(cumulativeWords);
+            // Reset the in-word flag after a newline.
+            inWord = false;
+        } else if (char === " ") {
+            // A space ends a word.
+            inWord = false;
+        } else {
+            // When a non-space, non-newline character is encountered and we're not in a word,
+            // it means we've started a new word.
+            if (!inWord) {
+                cumulativeWords++;
+                inWord = true;
+            }
+        }
+    }
 
-//   for (let segment of lineBreakSegments) {
-//     let words = segment.split(' ');
-//     promptList = promptList.concat(words);
-//     wordsBeforeBreak += words.length;
-//     lineBreaks.push(wordsBeforeBreak);
-//   }
+    return lineBreaks;
+};
 
-  return { promptList, lineBreaks };
+export const processPrompt = (prompt: string): string[] => {
+    return prompt.replace(/\n/g, ' ').split(/ +/);
 };
 
 // Processes the full data set by iterating over both input and prompt lists.
@@ -31,7 +46,8 @@ export const processData = (
     prompt: string
 ): WordListModel => {
     const inputList = input.split(" ");
-    const { promptList, lineBreaks } = processPrompt(prompt);
+    const promptList = processPrompt(prompt);
+    const lineBreaks = identifyLineBreaks(prompt);
 
     const wordList = new WordListModel([], lineBreaks);
 

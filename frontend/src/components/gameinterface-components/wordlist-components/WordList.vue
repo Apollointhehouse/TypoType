@@ -10,7 +10,9 @@ const lineBreaks = props.value.getLineBreaks();
 <template>
     <template v-for="(word, index) in value.getWords()" :key="index">
         <Word :value="word" />
-        <br v-if="lineBreaks.includes(index + 1)" />
+        <template v-if="lineBreaks.includes(index + 1)">
+            <br v-for="(n, i) in value.getLineBreaks().filter(x => x === index + 1)" :key="i" />
+        </template>
     </template>
 </template>
 
