@@ -1,10 +1,10 @@
 package me.apollointhehouse
 
-import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.request.receive
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import me.apollointhehouse.models.Text
 import java.io.File
 
 // Generates keys based on ASCII
@@ -19,7 +19,7 @@ fun Application.configureRouting() {
         get("/api/prompts") {
             val files = File("backend-kotlin/prompts").listFiles()
             val file = files.random()
-            call.respondText(file.readText(), status = HttpStatusCode.OK)
+            call.respond(Text(file.readText()))
         }
 
         get("/api/keymaps") {

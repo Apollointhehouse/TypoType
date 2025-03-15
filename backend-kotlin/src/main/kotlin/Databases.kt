@@ -9,14 +9,15 @@ import me.apollointhehouse.models.*
 import org.jetbrains.exposed.sql.Database
 import java.io.File
 
-fun Application.configureDatabases() {
-    val database = Database.connect(
-        url = "jdbc:sqlite:${File("backend-kotlin/data.db").absolutePath}",
-        driver = "org.sqlite.JDBC",
-    )
+val database = Database.connect(
+    url = "jdbc:sqlite:${File("backend-kotlin/data.db").absolutePath}",
+    driver = "org.sqlite.JDBC",
+)
 
-    val userService = UserService(database)
-    val scoreService = ScoreService(database)
+val userService = UserService(database)
+val scoreService = ScoreService(database)
+
+fun Application.configureDatabases() {
     routing {
         post("/api/users") {
             val user = call.receive<ExposedUser>()
@@ -27,7 +28,8 @@ fun Application.configureDatabases() {
         }
 
         post("/api/scores") {
-            val score = call.receive<ScorePost>()
+            val score = call.receive<Score>()
+            println("Adding score: $score")
             scoreService.create(score)
             call.respond(HttpStatusCode.Created)
         }
@@ -35,7 +37,7 @@ fun Application.configureDatabases() {
         get("/api/scores") {
             call.respond(
                 HttpStatusCode.Created,
-                scoreService.getAll().sortedByDescending { it.score }.take(20)
+                scoreService.getTopScores()
             )
         }
     }

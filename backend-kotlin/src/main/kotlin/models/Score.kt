@@ -3,4 +3,4 @@ package me.apollointhehouse.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ScorePost(val id: Int, val score: Int)
+data class Score(val id: Int, val score: Int)
