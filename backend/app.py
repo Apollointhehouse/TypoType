@@ -4,17 +4,11 @@ import os
 import secrets
 import json
 import sqlite3
-from datetime import datetime
-
-from keymap import get_keymap
-from User import User, createUser, getUser
 from keymap import generate_keymap
 from captcha import generate_captcha
 from captcha import check_captcha
 
-
 app = Flask(__name__)
-
 
 con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
