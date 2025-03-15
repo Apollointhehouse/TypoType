@@ -7,6 +7,7 @@ import json
 from User import User
 from keymap import generate_keymap
 from captcha import generate_captcha
+from captcha import check_captcha
 
 
 app = Flask(__name__)
@@ -45,8 +46,11 @@ def get_highscores():
 # Captcha
 @app.route("/captcha", methods=["POST"])
 def get_captcha():
-    captcha = generate_captcha()
-    return Response(captcha, status=201)
+    return Response(generate_captcha, status=201)
+
+@app.route("/captcha", methods=["GET"])
+def verify_captcha(input_captcha):
+    return check_captcha(input_captcha)
 
 
 # User
