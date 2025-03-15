@@ -1,14 +1,20 @@
-import db
+from dataclasses import dataclass
 
+
+@dataclass
 class User:
-    @property
-    def name(self):
-        return db.cur.execute(f"SELECT name FROM users WHERE id = {id}")
+    id: int
+    name: str
+    high_score: int
 
-    def __init__(self, id, name = None):
-        self.id = id
-        self.score = 0
-        self.timestamp = None
+def getUser(cur, id):
 
-        db.cur.execute(f"INSERT INTO users values ({id}, {name})")
-        db.cur.execute(f"INSERT INTO scores values ({id}, {score}, {timestamp})")
+    name = cur.execute(f"SELECT name FROM users WHERE id = {id}").fetchone()
+    cur.execute(f"SELECT score, MAX(timestamp) FROM ")
+
+    return User(id, name)
+
+def createUser(cur, id, name):
+    cur.execute(f"INSERT INTO users values ({id}, {name})")
+
+    return User(id, name)

@@ -1,19 +1,20 @@
+import sqlite3
+from datetime import datetime
+
 from flask import Flask, request, Response
 import db
 import os
 import secrets
 import json
 
-from User import User
+from User import User, createUser, getUser
 from keymap import get_keymap
 
 app = Flask(__name__)
 
-db.setup_db()
-
-@app.route("/")
-def hello_world() -> str:
-    return "<p>Hello, World!</p>"
+con = sqlite3.connect("data.db", check_same_thread=False)
+cur = con.cursor()
+db.setup_db(con, cur)
 
 @app.route("/prompts", methods=["GET"])
 def get_random_prompt():
@@ -30,29 +31,23 @@ def get_keymap():
 
 @app.route("/scores", methods=["POST"])
 def post_score():
-    return Response(request.get_json(), status=201)
+    try:
+        data = request.get_json()
+
+        res = cur.execute(f"INSERT INTO scores (id, score) values ({data.get('id')}, {data.get('score')})")
+        con.commit()
+        
+        data['id'] = cur.lastrowid
+
+    except Exception as e:
+        print(e)
+    return Response(json.dumps(data), status=201)
+
 
 @app.route("/highscores", methods=["GET"])
 def get_highscores():
-    return Response(json.dumps([{"name": 'Bob', "wpm":1}, {"name": 'Jack', "wpm":3}, {"name": 'Fern', "wpm":32}, {"name": 'Asley', "wpm":13}]), status=201)
+    cur.execute("SELECT * FROM scores")
+    all_records = cur.fetchall()
+    return Response(json.dumps(all_records), status=201)
 
 # User
-@app.post("/api/user/login")
-def register(id, user):
-
-    return
-
-@app.post("/api/user/login")
-def login(id, user):
-    return
-
-@app.post("/api/user")
-def about():
-    data = request.json
-    id = data.get("id")
-
-    user = User(id)
-
-    return " ".join([user.name, user.score, user.timestamp])
-
-# @app.get("/api/user")
