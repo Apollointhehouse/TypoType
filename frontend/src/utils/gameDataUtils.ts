@@ -47,7 +47,13 @@ export function useGameData() {
     const rawWordsPerMinute = Math.floor((wordsAttempted / TIMER_TIME_LIMIT) * 60);
     const accuracy = data.value.getAccuracy();
     const letterCounts = data.value.getLetterCounts();
-    return { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts };
+    
+    const scoreData = { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts };
+    
+    // Store in local storage
+    localStorage.setItem('gameScore', JSON.stringify(scoreData));
+    
+    return scoreData;
   }
 
   // Keyboard event handler
