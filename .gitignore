@@ -1,6 +1,7 @@
 /backend/.env
 /backend/.venv/
 /backend/.idea
+/backend/data.db
 /.idea
 /node_modules/*
 
