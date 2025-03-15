@@ -2,15 +2,15 @@
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {processData} from '../../utils/DataProcessor';
 import {DummyPrompt} from '../../enums/DummyPrompt';
-import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
+import WordList from './WordList/WordList.vue';
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
-
 import Footer from '../footer-components/Footer.vue';
 
 const TIME_LIMIT = 60;
 
-const prompt = ref<string>('');
+// Fetch the prompt from the backend
+const prompt = ref<string>(DummyPrompt);
 
 const getPrompt = async () =>{
     const response = await fetch('http://localhost:5000/api/prompts')
@@ -18,23 +18,22 @@ const getPrompt = async () =>{
     prompt.value = json['text']
 }
 
-interface Dic {
+// Fetch the keymap from the backend
+interface Dictionary {
     [key: string]: string
 }
-const keys = ref<Dic>({});
+const keys = ref<Dictionary>({});
 
 const getKeys = async () =>{
     const response = await fetch('http://localhost:5000/api/keymaps')
     keys.value = await response.json()
 }
 
-// Reactive variable to store the current word being typed
 const userInput = ref<string>("");
-const prompt = {value: DummyPrompt};
 
 // List to store completed words
 const data = computed<WordModel[]>(() => {
-  // const promptWords = await getPrompt()
+  // const promptList = await getPrompt()
   const promptList = prompt.value.split(" ");
   return processData(userInput.value.split(" "), promptList);
 });
@@ -45,6 +44,7 @@ const progress = computed<{current: number, total: number}>(() => {
   return {current: userInputList.length - 1, total: promptList.length};
 });
 
+// Timer
 const timeLeft = ref<number>(TIME_LIMIT);
 const timerReference = ref<number>();
 
@@ -70,8 +70,10 @@ const restart = () => {
   startTimer();
 }
 
-// Function to handle input changes
+// Input Handler
+
 let lastInput = " ";
+
 function handleInput(event: KeyboardEvent) {
   const key = event.key;
 
@@ -83,11 +85,14 @@ function handleInput(event: KeyboardEvent) {
   } else if (/^[a-zA-Z0-9\s.,!?;:'"(){}[\]<>@#$%^&*-_=+|\\/~`€¢€]$/.test(key)) {
     // Add alphanumeric characters (letters and numbers) to the current word
     const is_upper = key !== key.toLowerCase()
+    let input = " ";
     if (key.toLowerCase() in keys.value){
-      userInput.value += is_upper ? keys.value[key.toLowerCase()].toUpperCase() : keys.value[key.toLowerCase()];
+      input = is_upper ? keys.value[key.toLowerCase()].toUpperCase() : keys.value[key.toLowerCase()];
     } else {
-      userInput.value += key;
+      input = key;
     }
+    userInput.value += input;
+    lastInput = input;
   }
 }
 
