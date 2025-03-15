@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
-import {processData} from '../../utils/DataPreprocessor';
+import {processData} from '../../utils/DataProcessor';
 import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
