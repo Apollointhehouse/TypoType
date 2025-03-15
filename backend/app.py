@@ -12,7 +12,7 @@ from keymap import get_keymap
 
 app = Flask(__name__)
 
-con = sqlite3.connect("data.db")
+con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
 db.setup_db(con, cur)
 
@@ -36,15 +36,19 @@ def get_keymap():
 
 @app.route("/scores", methods=["POST"])
 def post_score():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
 
+        res = cur.execute(f"INSERT INTO scores (id, score) values ({data.get('id')}, {data.get('score')})")
+        con.commit()
+        
+        data['id'] = cur.lastrowid
 
-    res = cur.execute(f"INSERT INTO scores values ({data.get('id')}, {data.get('score')})")
-    con.commit()
-    print(res)
+    except Exception as e:
+        print(e)
+    return Response(json.dumps(data), status=201)
 
-    return Response(request.get_json(), status=201)
 
 @app.route("/highscores", methods=["GET"])
 def get_highscores():
