@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { VueFinalModal } from "vue-final-modal";
+import { useRouter } from "vue-router";
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 import axios from "axios";
 
@@ -11,8 +12,14 @@ const emit = defineEmits<{
 }>();
 
 const username = ref(localStorage.getItem("newUsername"));
-const score = ref(localStorage.getItem("score"));
+const score = ref(localStorage.getItem("gameScore"));
+const router = useRouter();
 
+const closeModal = () => {
+  localStorage.clear(); // Clear localStorage
+  emit("update:modelValue", false); // Close the modal
+  router.push("/"); // Redirect to home page
+};
 const saveScore = async () => {
   try {
     const response = await axios.post("http://localhost:5000/api/scores", {
@@ -24,9 +31,24 @@ const saveScore = async () => {
   } catch (error) {
     console.error("Failed to save score: ", error);
     alert("Failed to save score. Please try again");
-    emit("update:modelValue", false);
+    closeModal();
   }
 };
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
+    closeModal(); // Clear localStorage, close modal, and redirect
+  }
+};
+
+// Add event listener when the modal is mounted
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
+// Remove event listener when the modal is unmounted
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeydown);
+});
 </script>
 
 <template>
@@ -38,19 +60,17 @@ const saveScore = async () => {
       <div class="modal-content">
         <h2>Are you sure you want to save your score?</h2>
         <button class="yesBtn" @click="saveScore">
-          <p>
-            Yes
-            <svg width="20" height="20" fill="currentColor">
-              <use :href="`${BootstrapIcons}#check-lg`" />
-            </svg>
-          </p>
+          <svg width="20" height="20" fill="currentColor">
+            <use :href="`${BootstrapIcons}#check-lg`" />
+          </svg>
+          <p>Yes</p>
         </button>
-        <button class="noBtn" @click="emit('update:modelValue', false)">
+        <button class="noBtn" @click="closeModal">
           <p>
-            No
             <svg width="20" height="20" fill="currentColor">
               <use :href="`${BootstrapIcons}#x-lg`" />
             </svg>
+            No
           </p>
         </button>
       </div>
@@ -59,6 +79,7 @@ const saveScore = async () => {
 </template>
 
 <style scoped>
+/* added styling here as modal wasn't looking quite right with TailwindCSS yet */
 /* Fullscreen overlay to center the modal */
 .modal-container {
   position: fixed;
@@ -87,21 +108,21 @@ const saveScore = async () => {
 }
 
 .yesBtn {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   margin-right: 15px;
   background-color: green;
   color: white;
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   width: 100px;
-  align-items: center;
 }
 
 .yesBtn:hover {
   background-color: darkgreen;
 }
+
 .noBtn {
   margin-top: 15px;
   background-color: red;

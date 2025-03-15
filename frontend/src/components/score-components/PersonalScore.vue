@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-const score = ref(100);
+const score = ref(localStorage.getItem("gameScore"));
 const userName = ref(localStorage.getItem("newUsername"));
 </script>
 
