@@ -55,12 +55,31 @@ def get_highscores():
     all_records = cur.fetchall()
     return Response(json.dumps(all_records), status=201)
 
+# Users
+
+@app.post("/api/users")
+def create_user():
+    try:
+        data = request.get_json()
+
+        res = cur.execute(f"INSERT INTO users (name) values ({data.get('name')})")
+        con.commit()
+
+        data['id'] = cur.lastrowid
+        return Response(json.dumps(data), status=201)
+
+    except Exception as e:
+        print(e)
+    return Response(status=500)
+
 
 # Captcha
-@app.route("/captcha", methods=["POST"])
+@app.route("/api/captcha", methods=["GET"])
 def get_captcha():
-    return Response(generate_captcha, status=201)
+    return Response(generate_captcha(), status=201)
 
-@app.route("/captcha", methods=["GET"])
-def verify_captcha(input_captcha):
-    return check_captcha(input_captcha)
+@app.route("/api/captcha", methods=["POST"])
+def verify_captcha():
+    input_captcha = request.form.get("userAnswer")
+    return Response(check_captcha(input_captcha), status=200)
+
