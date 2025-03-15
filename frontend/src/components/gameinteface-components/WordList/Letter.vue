@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LetterModel } from '../../../models/Letter';
-import { LetterState } from '../../../enums/Enums';
+import { LetterState } from '../../../enums/enums';
 
 const props = defineProps<{ value: LetterModel }>();
 const { value, state } = props.value;
@@ -13,7 +13,6 @@ const { value, state } = props.value;
     <span v-else-if="state === LetterState.INCORRECT" class="text-red-400">{{ value }}</span>
     <span v-else-if="state === LetterState.MISSING" class="text-zinc-600">{{ value }}</span>
     <span v-else-if="state === LetterState.EXTRA" class="text-red-700">{{ value }}</span>
-    <span v-else-if="state === LetterState.CURSOR" class="text-yellow-700">{{ value }}</span>
 </template>
 
 <style scoped></style>

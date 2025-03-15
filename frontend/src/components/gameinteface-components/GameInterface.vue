@@ -6,7 +6,7 @@ import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 
-const TIME_LIMIT = 30;
+const TIME_LIMIT = 60;
 
 const userInput = ref<string>("");
 const prompt = {value: DummyPrompt};
@@ -76,7 +76,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-start gap-10 text-2xl">
+  <div class="flex flex-col gap-8 ">
     <!-- Display the current word and completed words -->
     <!-- <div>{{ userInput }}</div> -->
      <div class="flex flex-col gap-2">
@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
       <WordList :value="data" :key="userInput.length"/>
     </div>
     <span class="group flex justify-center">
-      <svg @click="restart" width="30" height="30" fill="currentColor" class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300">
+      <svg @click="restart" width="20" height="20" fill="currentColor" class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300">
         <use :href="`${BootstrapIcons}#arrow-clockwise`" />
       </svg>
     </span> 
