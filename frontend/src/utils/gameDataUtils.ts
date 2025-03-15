@@ -33,8 +33,8 @@ export function useGameData() {
 
   const progress = computed(() => {
     const userInputList = userInput.value.split(' ');
-    const promptList = prompt.value.split(' ');
-    return { current: userInputList.length - 1, total: promptList.length };
+    const totalWords = data.value.getLength();
+    return { current: userInputList.length - 1, total: totalWords - 1 };
   });
 
   // Calculate score based on game data
