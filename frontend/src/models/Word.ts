@@ -1,5 +1,5 @@
 // src/models/Word.ts
-import { WordState, LetterState } from "../enums/enums";
+import { WordState, LetterState } from "../enums/Enums";
 import { LetterModel } from "./Letter";
 
 // Define the Word class
