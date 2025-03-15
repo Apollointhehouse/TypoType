@@ -30,6 +30,11 @@ export const processData = (inputList: string[], promptList: string[]): WordMode
         promptPointer = promptIterable.next();
     }
 
+    // check if past words are valid
+    for (let i = 0; i < inputList.length - 1; i++) {
+        processedData[i].validateState();
+    }
+
     return processedData;
 }
 
@@ -54,13 +59,13 @@ export const processWord = (input: string, prompt: string): WordModel => {
         }
 
     }
-        
+
     while (!promptPointer.done) {
         categorizedLetters.push(new LetterModel(promptPointer.value, LetterState.MISSING));
         promptPointer = promptIterable.next();
     }
 
     const word = new WordModel(categorizedLetters);
-    
+
     return word;
 }
