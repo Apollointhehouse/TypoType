@@ -3,7 +3,7 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { useGameData } from '@/utils/gameDataUtils';
 import { useTimer } from '@/utils/timerUtils';
 import WordList from '@/components/gameinterface-components/wordlist-components/WordList.vue';
-import FancyTitle from '@/components/gameinterface-components/animated-title-components/FancyTitle.vue';
+import FlashingTitle from '@/components/gameinterface-components/animated-title-components/FlashingTitle.vue';
 import Footer from '@/components/gameinterface-components/footer-components/Footer.vue';
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
 
@@ -50,7 +50,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="flex flex-col gap-8">
     <!-- Header with fancy title -->
-    <FancyTitle value="T Y P O T Y P E" />
+    <FlashingTitle value="T Y P O T Y P E" />
     <div class="flex flex-col gap-2">
       <div>{{ timeLeft }}</div>
       <div>{{ progress.current }} / {{ progress.total }}</div>
