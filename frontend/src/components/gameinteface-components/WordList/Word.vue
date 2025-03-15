@@ -1,15 +1,5 @@
 <script setup lang="ts">
 import Letter from './Letter.vue';
-<<<<<<< HEAD
-import { Letter as LetterClass } from '../../../models/Letter';
-import { LetterState } from '../../../enums/enums';
-
-const testLetter = new LetterClass('A', LetterState.CORRECT);
-</script>
-
-<template>
-    <Letter :value="testLetter" />
-=======
 import { WordModel } from '../../../models/Word';
 import { WordState } from '../../../enums/enums';
 const props = defineProps<{ value: WordModel }>();
@@ -36,7 +26,6 @@ function getStateClass(state: WordState): string {
         </template>
         {{ " " }}
     </span>
->>>>>>> jxav22-frontend
 </template>
 
 <style scoped></style>
