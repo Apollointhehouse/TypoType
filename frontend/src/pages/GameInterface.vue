@@ -3,12 +3,13 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { useGameData } from '@/utils/gameDataUtils';
 import { useTimer } from '@/utils/timerUtils';
 import WordList from '@/components/gameinterface-components/wordlist-components/WordList.vue';
-import FancyTitle from '@/components/gameinterface-components/animated-title-components/FancyTitle.vue';
+import FlashingTitle from '@/components/gameinterface-components/animated-title-components/FlashingTitle.vue';
 import Footer from '@/components/gameinterface-components/footer-components/Footer.vue';
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
 
 // Get game data and input handler from utils
 const {
+  prompt,
   userInput,
   progress,
   computeScore,
@@ -30,6 +31,7 @@ function onTimeUp() {
 const { timeLeft, startTimer, stopTimer, resetTimer } = useTimer(onTimeUp);
 
 function restartGame() {
+  fetchPrompt();
   stopTimer();
   userInput.value = '';
   resetTimer();
@@ -50,14 +52,14 @@ onBeforeUnmount(() => {
 <template>
   <div class="flex flex-col gap-8">
     <!-- Header with fancy title -->
-    <FancyTitle value="T Y P O T Y P E" />
+    <FlashingTitle value="T Y P O T Y P E" />
     <div class="flex flex-col gap-2">
       <div>{{ timeLeft }}</div>
       <div>{{ progress.current }} / {{ progress.total }}</div>
     </div>
     <!-- Word List Display -->
     <div>
-      <WordList :value="data" :key="userInput.length" />
+      <WordList :value="data" :key="`${userInput.length},${prompt.length}`" />
     </div>
     <!-- Restart button -->
     <span class="group flex justify-center">

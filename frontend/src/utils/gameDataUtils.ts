@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
 import { processData } from '@/utils/dataProcessingUtils';
-import { dummyPrompt } from '@/constants/dummyPrompt.ts';
+import { loadingPrompt } from '@/constants/loadingPrompt';
 import type { WordListModel } from '@/models/WordListModel';
 
 interface Dictionary {
@@ -9,7 +9,7 @@ interface Dictionary {
 
 export function useGameData() {
   // State
-  const prompt = ref<string>(dummyPrompt);
+  const prompt = ref<string>(loadingPrompt);
   const keys = ref<Dictionary>({});
   const userInput = ref<string>('');
   const lastInput = ref<string>(' ');

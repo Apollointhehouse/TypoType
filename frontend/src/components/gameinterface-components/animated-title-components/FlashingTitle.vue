@@ -25,14 +25,14 @@ setInterval(() => {
 </script>
 
 <template>
-    <h1>
+    <h1 @click="flashedIndex = indexTracker.next().value">
         <span v-for="(letter, index) in letters" :key="index" :class="{fancyLetter: true, flashingLetter : flashedIndex === index}">{{ letter }}</span>
     </h1>
 </template>
 
 <style scoped>
 .fancyLetter {
-  transition: opacity 2000ms ease-in-out; /* Smooth transition for opacity */
+  transition: opacity 1000ms ease-in-out; /* Smooth transition for opacity */
 }
 
 .flashingLetter {
