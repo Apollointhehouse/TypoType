@@ -6,6 +6,8 @@ import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 
+import Footer from '../footer-components/Footer.vue';
+
 const TIME_LIMIT = 60;
 
 const userInput = ref<string>("");
@@ -76,9 +78,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 ">
+  <div class="flex flex-col gap-8">
     <!-- Display the current word and completed words -->
     <!-- <div>{{ userInput }}</div> -->
+     <h1>T Y P O T Y P E</h1>
      <div class="flex flex-col gap-2">
        <div>{{ timeLeft }}</div>
        <div>{{ progress.current }} / {{ progress.total }}</div>
@@ -92,6 +95,7 @@ onBeforeUnmount(() => {
       </svg>
     </span> 
   </div>
+  <Footer />
 </template>
 
 <style scoped>
