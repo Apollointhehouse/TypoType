@@ -1,21 +1,4 @@
 <script setup lang="ts">
-<<<<<<< HEAD
-import Word from './WordList/Word.vue';
-
-// class OutputProps {
-//     message: string = '';
-// }
-
-// const props = defineProps<OutputProps>();
-</script>
-
-<template>
-    <Word/>
-</template>
-
-<style scoped>
-</style>
-=======
 // import Word from './WordList/Word.vue';
 // import { WordModel } from '../../models/Word';
 
@@ -55,4 +38,3 @@ const testWordlList = processData(["TESTDJSDF", "DSLKFJKLFJEW", "DLKSFJLKFJES", 
 </template>
 
 <style scoped></style>
->>>>>>> jxav22-frontend
