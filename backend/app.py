@@ -16,11 +16,6 @@ con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
 db.setup_db(con, cur)
 
-
-@app.route("/")
-def hello_world() -> str:
-    return "<p>Hello, World!</p>"
-
 @app.route("/prompts", methods=["GET"])
 def get_random_prompt():
     files = os.listdir('prompts')
