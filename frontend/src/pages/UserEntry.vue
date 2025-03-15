@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import StartButton from "../components/userentry-components/StartButton.vue";
-import UserModal from "../components/userentry-components/UserModal.vue";
+import StartButton from "@/components/userentry-components/StartButton.vue";
+import UserModal from "@/components/userentry-components/UserModal.vue";
+import Footer from "@/components/gameinterface-components/footer-components/Footer.vue";
+import Giphy from "@/components/userentry-components/Giphy.vue";
 
 // ✅ Create a reactive state for modal
 const showModal = ref(false);
@@ -10,19 +12,18 @@ const openModal = () => {
   console.log("Opening modal");
   showModal.value = true;
 };
-
-const closeModal = () => {
-  console.log("Closing modal");
-  showModal.value = false;
-};
 </script>
 
 <template>
-  <!-- ✅ Connect modal visibility state -->
-  <UserModal v-model="showModal" />
-  
-  <h1>Test your Might!</h1>
-  
-  <!-- ✅ Ensure button triggers modal -->
-  <StartButton @click="openModal" />
+  <div class="w-2xl h-screen">
+    <div class="flex flex-col items-center">
+      <UserModal v-model="showModal" />
+
+      <h1>Test your Might!</h1>
+      <Giphy />
+      <!-- ✅ Ensure button triggers modal -->
+      <StartButton @click="openModal" class="w-[50%]" />
+    </div>
+    <Footer />
+  </div>
 </template>
