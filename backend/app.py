@@ -6,18 +6,14 @@ import json
 import sqlite3
 from datetime import datetime
 
-from User import User
+from User import User, createUser, getUser
 from keymap import generate_keymap
 from captcha import generate_captcha
 from captcha import check_captcha
-from User import User, createUser, getUser
-from keymap import get_keymap
 
 
 app = Flask(__name__)
 
-
-db.setup_db()
 
 con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
