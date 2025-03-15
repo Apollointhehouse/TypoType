@@ -1,8 +1,11 @@
-from flask import Flask
+from flask import Flask, request
 
-import sqlite3
+import db
+from User import User
 
 app = Flask(__name__)
+
+db.setup_db()
 
 @app.route("/")
 def hello_world() -> str:
@@ -21,14 +24,20 @@ def prompt() -> str:
 # User
 @app.post("/api/user/login")
 def register(id, user):
+
     return
 
 @app.post("/api/user/login")
 def login(id, user):
     return
 
-@app.get("/api/user/{user}/about")
-def about(user):
-    return
+@app.post("/api/user")
+def about():
+    data = request.json
+    id = data.get("id")
+
+    user = User(id)
+
+    return " ".join([user.name, user.score, user.timestamp])
 
 # @app.get("/api/user")
