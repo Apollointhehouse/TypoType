@@ -1,5 +1,5 @@
-import { WordState } from "../enums/enums";
-import { WordModel } from "./Word";
+import { WordState } from "@/constants/enums";
+import { WordModel } from "./WordModel";
 
 export class WordListModel {
     words: WordModel[];
@@ -53,7 +53,7 @@ export class WordListModel {
     }
 
     // validate the first x words
-    validateWords(x: number) {
+    checkWordsCorrect(x: number) {
         for (let i = 0; i < x && i <= this.words.length; i++) {
             this.words[i].validateState();
         }

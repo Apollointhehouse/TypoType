@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import PersonalScore from "../components/score-components/PersonalScore.vue";
-import ShowScores from "../components/score-components/ShowScores.vue";
-import SaveScoreBtn from "../components/score-components/SaveScoreBtn.vue";
-import SaveScoreModal from "../components/score-components/SaveScoreModal.vue";
+import PersonalScore from "@/components/score-components/PersonalScore.vue";
+import ShowScores from "@/components/score-components/ShowScores.vue";
+import SaveScoreBtn from "@/components/score-components/SaveScoreBtn.vue";
+import SaveScoreModal from "@/components/score-components/SaveScoreModal.vue";
 
 const showScoreModal = ref(false);
 

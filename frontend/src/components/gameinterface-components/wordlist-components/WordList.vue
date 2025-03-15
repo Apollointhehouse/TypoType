@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { WordListModel } from '../../../models/WordList';
+import { WordListModel } from '@/models/WordListModel';
 import Word from './Word.vue';
 
 const props = defineProps<{ value: WordListModel }>();
