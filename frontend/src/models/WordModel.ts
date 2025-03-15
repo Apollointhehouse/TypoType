@@ -1,6 +1,6 @@
 // src/models/Word.ts
-import { WordState, LetterState } from "../enums/Enums";
-import { LetterModel } from "./Letter";
+import { WordState, LetterState } from "@/constants/enums";
+import { LetterModel } from "./LetterModel";
 
 // Define the Word class
 export class WordModel {
@@ -30,5 +30,25 @@ export class WordModel {
 
     addLetters(letters: string) {
         this.letters.push(...letters.split('').map(letter => new LetterModel(letter)));
+    }
+
+    getLength() {
+        return this.letters.length;
+    }
+
+    getNumberOfCorrectLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.CORRECT).length;
+    }
+    
+    getNumberOfIncorrectLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.INCORRECT).length;
+    }
+
+    getNumberOfExtraLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.EXTRA).length;
+    }
+
+    getNumberOfMissingLetters() {   
+        return this.letters.filter(letter => letter.state === LetterState.MISSING).length;
     }
 }

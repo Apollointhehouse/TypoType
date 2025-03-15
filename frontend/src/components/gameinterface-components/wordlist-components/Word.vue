@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Letter from './Letter.vue';
-import { WordModel } from '../../../models/Word';
-import { WordState } from '../../../enums/Enums';
+import { WordModel } from '@/models/WordModel';
+import { WordState } from '@/constants/enums';
 const props = defineProps<{ value: WordModel }>();
 
 const { letters, state } = props.value;
