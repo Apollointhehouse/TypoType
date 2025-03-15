@@ -3,13 +3,23 @@ import { WordModel } from "./WordModel";
 
 export class WordListModel {
     words: WordModel[];
+    lineBreaks: number[];
 
-    constructor(words: WordModel[]) {
+    constructor(words: WordModel[], lineBreaks: number[] = []) {
         this.words = words
+        this.lineBreaks = lineBreaks;
+    }
+
+    getLength() {
+        return this.words.length;
     }
 
     getWords() {
         return this.words;
+    }
+
+    getLineBreaks() {
+        return this.lineBreaks;
     }
 
     // Method to change the state

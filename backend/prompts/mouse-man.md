@@ -1,0 +1,3 @@
+I was born Frederick Lawrence Jamieson, I graduated with honors and even started the Frankton Society for Mathematics. Alas, it would appear people only remember you for your most recent achievement. Mine being the previous weekend when I chased a slice of a particularly expensive cheese down the stairs. You see I was eating my lunch, a sandwich, and the gruyere slipped, what else was I supposed to do? I suppose it doesn't help that I have a large nose, whispy moustache and well defined slouch. I must have looked like some sort of large marsupial running between the floors in the office.
+
+Anyway, now they called me Professor of Quadrodents.

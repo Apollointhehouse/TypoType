@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
 import { processData } from '@/utils/dataProcessingUtils';
-import { dummyPrompt } from '@/constants/dummyPrompt.ts';
+import { loadingPrompt } from '@/constants/loadingPrompt';
 import type { WordListModel } from '@/models/WordListModel';
 
 interface Dictionary {
@@ -9,7 +9,7 @@ interface Dictionary {
 
 export function useGameData() {
   // State
-  const prompt = ref<string>(dummyPrompt);
+  const prompt = ref<string>(loadingPrompt);
   const keys = ref<Dictionary>({});
   const userInput = ref<string>('');
   const lastInput = ref<string>(' ');
@@ -28,14 +28,13 @@ export function useGameData() {
 
   // Computed game data
   const data = computed<WordListModel>(() => {
-    const promptList = prompt.value.split(' ');
-    return processData(userInput.value.split(' '), promptList);
+    return processData(userInput.value, prompt.value);
   });
 
   const progress = computed(() => {
     const userInputList = userInput.value.split(' ');
-    const promptList = prompt.value.split(' ');
-    return { current: userInputList.length - 1, total: promptList.length };
+    const totalWords = data.value.getLength();
+    return { current: userInputList.length - 1, total: totalWords - 1 };
   });
 
   // Calculate score based on game data
@@ -47,7 +46,13 @@ export function useGameData() {
     const rawWordsPerMinute = Math.floor((wordsAttempted / TIMER_TIME_LIMIT) * 60);
     const accuracy = data.value.getAccuracy();
     const letterCounts = data.value.getLetterCounts();
-    return { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts };
+    
+    const scoreData = { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts };
+    
+    // Store in local storage
+    localStorage.setItem('gameScore', JSON.stringify(scoreData));
+    
+    return scoreData;
   }
 
   // Keyboard event handler

@@ -1,0 +1,9 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "..\\.venv\\Scripts\\activate && flask --app app run"
+    },
+    "dependencies": {}
+  }
+  

@@ -8,12 +8,49 @@ function getValueOrEmpty(result: IteratorResult<string>): string {
     return result.done ? "" : result.value;
 }
 
+export const identifyLineBreaks = (prompt: string): number[] => {
+    const lineBreaks: number[] = [];
+    let cumulativeWords = 0;
+    let inWord = false;
+
+    // Iterate over every character in the prompt.
+    for (let char of prompt) {
+        if (char === "\n") {
+            // Record the current word count at each newline.
+            lineBreaks.push(cumulativeWords);
+            // Reset the in-word flag after a newline.
+            inWord = false;
+        } else if (char === " ") {
+            // A space ends a word.
+            inWord = false;
+        } else {
+            // When a non-space, non-newline character is encountered and we're not in a word,
+            // it means we've started a new word.
+            if (!inWord) {
+                cumulativeWords++;
+                inWord = true;
+            }
+        }
+    }
+
+    return lineBreaks;
+};
+
+export const processPrompt = (prompt: string): string[] => {
+    return prompt.replace(/\n/g, ' ').split(/ +/);
+};
+
 // Processes the full data set by iterating over both input and prompt lists.
 export const processData = (
-    inputList: string[],
-    promptList: string[]
+    input: string,
+    prompt: string
 ): WordListModel => {
-    const wordList = new WordListModel([]);
+    const inputList = input.split(" ");
+    const promptList = processPrompt(prompt);
+    const lineBreaks = identifyLineBreaks(prompt);
+
+    const wordList = new WordListModel([], lineBreaks);
+
     processWordPair(
         inputList[Symbol.iterator](),
         promptList[Symbol.iterator](),
@@ -38,7 +75,7 @@ function processWordPair(
         const promptWord = getValueOrEmpty(promptResult);
 
         wordList.addWord(processWord(inputWord, promptWord));
-        
+
         if (!inputResult.done) inputResult = inputIterator.next();
         if (!promptResult.done) promptResult = promptIterator.next();
     }

@@ -12,7 +12,7 @@ export function useTimer(onTimeUp: () => void) {
       if (timeLeft.value > 0) {
         timeLeft.value--;
       } else {
-        stopTimer();
+        stopTimer()
         onTimeUp();
       }
     }, TIMER_INTERVAL);
