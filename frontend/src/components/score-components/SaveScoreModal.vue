@@ -12,7 +12,7 @@ const emit = defineEmits<{
 }>();
 
 const username = ref(localStorage.getItem("newUsername"));
-const score = ref(localStorage.getItem("score"));
+const score = ref(localStorage.getItem("gameScore"));
 const router = useRouter();
 
 const closeModal = () => {
@@ -60,19 +60,17 @@ onUnmounted(() => {
       <div class="modal-content">
         <h2>Are you sure you want to save your score?</h2>
         <button class="yesBtn" @click="saveScore">
-          <p>
-            Yes
-            <svg width="20" height="20" fill="currentColor">
-              <use :href="`${BootstrapIcons}#check-lg`" />
-            </svg>
-          </p>
+          <svg width="20" height="20" fill="currentColor">
+            <use :href="`${BootstrapIcons}#check-lg`" />
+          </svg>
+          <p>Yes</p>
         </button>
         <button class="noBtn" @click="closeModal">
           <p>
-            No
             <svg width="20" height="20" fill="currentColor">
               <use :href="`${BootstrapIcons}#x-lg`" />
             </svg>
+            No
           </p>
         </button>
       </div>
@@ -81,6 +79,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* added styling here as modal wasn't looking quite right with TailwindCSS yet */
 /* Fullscreen overlay to center the modal */
 .modal-container {
   position: fixed;
@@ -109,21 +108,21 @@ onUnmounted(() => {
 }
 
 .yesBtn {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   margin-right: 15px;
   background-color: green;
   color: white;
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   width: 100px;
-  align-items: center;
 }
 
 .yesBtn:hover {
   background-color: darkgreen;
 }
+
 .noBtn {
   margin-top: 15px;
   background-color: red;
