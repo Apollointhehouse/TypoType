@@ -4,7 +4,9 @@
   "scripts": {
     "backend": "cd backend && npm run start",
     "frontend": "cd frontend && npm start",
-    "start": "concurrently \"npm run backend\" \"npm run frontend\""
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "gsap": "^3.12.7",
