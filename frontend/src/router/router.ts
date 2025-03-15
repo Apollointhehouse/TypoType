@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import GameInterface from "../pages/GameInterface.vue";
 import UserEntry from "../pages/UserEntry.vue";
@@ -9,7 +9,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 });
 

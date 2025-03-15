@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { VueFinalModal } from "vue-final-modal";
+import { useRouter } from "vue-router";
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 
 defineProps<{ modelValue: boolean }>();
@@ -8,6 +9,7 @@ defineProps<{ modelValue: boolean }>();
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
 }>();
+const router = useRouter();
 
 const newUsername = ref("");
 
@@ -17,6 +19,7 @@ const addUsername = () => {
       localStorage.setItem("newUsername", JSON.stringify(newUsername.value));
       console.log("Data saved to local storage:", newUsername.value);
       emit("update:modelValue", false); // Close modal
+      router.push("/type-test");
     } catch (error) {
       console.error(error);
     }

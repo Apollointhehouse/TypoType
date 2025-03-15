@@ -4,7 +4,6 @@ import GameInterface from "./components/gameinteface-components/GameInterface.vu
 </script>
 
 <template>
-  <!-- <Output /> -->
   <router-view />
 </template>
 
