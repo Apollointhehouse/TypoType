@@ -6,6 +6,7 @@ import {WordListModel} from '../../models/WordList';
 import WordList from './WordList/WordList.vue';
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 import Footer from '../footer-components/Footer.vue';
+import FancyTitle from './FancyTitle/FancyTitle.vue';
 
 const TIMER_TIME_LIMIT = 10;
 const TIMER_INTERVAL = 1000;
@@ -139,7 +140,7 @@ onBeforeUnmount(() => {
   <div class="flex flex-col gap-8">
     <!-- Display the current word and completed words -->
     <!-- <div>{{ userInput }}</div> -->
-     <h1>T Y P O T Y P E</h1>
+     <FancyTitle value="T Y P O T Y P E" />
      <div class="flex flex-col gap-2">
        <div>{{ timeLeft }}</div>
        <div>{{ progress.current }} / {{ progress.total }}</div>
