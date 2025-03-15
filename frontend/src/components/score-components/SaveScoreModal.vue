@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { VueFinalModal } from "vue-final-modal";
+import { useRouter } from "vue-router";
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 import axios from "axios";
 
@@ -12,7 +13,13 @@ const emit = defineEmits<{
 
 const username = ref(localStorage.getItem("newUsername"));
 const score = ref(localStorage.getItem("score"));
+const router = useRouter();
 
+const closeModal = () => {
+  localStorage.clear(); // Clear localStorage
+  emit("update:modelValue", false); // Close the modal
+  router.push("/"); // Redirect to home page
+};
 const saveScore = async () => {
   try {
     const response = await axios.post("http://localhost:5000/api/scores", {
@@ -24,9 +31,24 @@ const saveScore = async () => {
   } catch (error) {
     console.error("Failed to save score: ", error);
     alert("Failed to save score. Please try again");
-    emit("update:modelValue", false);
+    closeModal();
   }
 };
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
+    closeModal(); // Clear localStorage, close modal, and redirect
+  }
+};
+
+// Add event listener when the modal is mounted
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
+// Remove event listener when the modal is unmounted
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeydown);
+});
 </script>
 
 <template>
@@ -45,7 +67,7 @@ const saveScore = async () => {
             </svg>
           </p>
         </button>
-        <button class="noBtn" @click="emit('update:modelValue', false)">
+        <button class="noBtn" @click="closeModal">
           <p>
             No
             <svg width="20" height="20" fill="currentColor">
