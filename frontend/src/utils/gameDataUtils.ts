@@ -28,8 +28,7 @@ export function useGameData() {
 
   // Computed game data
   const data = computed<WordListModel>(() => {
-    const promptList = prompt.value.split(' ');
-    return processData(userInput.value.split(' '), promptList);
+    return processData(userInput.value, prompt.value);
   });
 
   const progress = computed(() => {

@@ -8,12 +8,33 @@ function getValueOrEmpty(result: IteratorResult<string>): string {
     return result.done ? "" : result.value;
 }
 
+export const processPrompt = (prompt: string): { promptList: string[]; lineBreaks: number[] } => {
+  let promptList: string[] = prompt.split(" "); // [];
+  let lineBreaks: number[] = [];
+
+//   let lineBreakSegments = prompt.split('\n\n');
+//   let wordsBeforeBreak = 0;
+
+//   for (let segment of lineBreakSegments) {
+//     let words = segment.split(' ');
+//     promptList = promptList.concat(words);
+//     wordsBeforeBreak += words.length;
+//     lineBreaks.push(wordsBeforeBreak);
+//   }
+
+  return { promptList, lineBreaks };
+};
+
 // Processes the full data set by iterating over both input and prompt lists.
 export const processData = (
-    inputList: string[],
-    promptList: string[]
+    input: string,
+    prompt: string
 ): WordListModel => {
-    const wordList = new WordListModel([]);
+    const inputList = input.split(" ");
+    const { promptList, lineBreaks } = processPrompt(prompt);
+
+    const wordList = new WordListModel([], lineBreaks);
+
     processWordPair(
         inputList[Symbol.iterator](),
         promptList[Symbol.iterator](),
@@ -38,7 +59,7 @@ function processWordPair(
         const promptWord = getValueOrEmpty(promptResult);
 
         wordList.addWord(processWord(inputWord, promptWord));
-        
+
         if (!inputResult.done) inputResult = inputIterator.next();
         if (!promptResult.done) promptResult = promptIterator.next();
     }
