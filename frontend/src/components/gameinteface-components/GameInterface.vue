@@ -1,20 +1,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {processData} from '../../utils/DataProcessor';
-// import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 import {WordModel} from '../../models/Word';
-
-// const promptList = await DummyPromptList;
 
 const prompt = ref<string>('');
 
 const getPrompt = async () =>{
     const response = await fetch('http://localhost:5000/prompts')
     prompt.value = await response.text()
-    
-    // console.log(prompt.split(" "))
-    // return prompt.split(" ")
 }
 
 // Reactive variable to store the current word being typed
