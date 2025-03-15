@@ -1,36 +1,28 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
-import {processData} from '../../utils/InputDataProcessor';
+import {processData} from '../../utils/DataProcessor';
+import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
+import {WordModel} from '../../models/Word';
 
-const promptList: string[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.".split(" ");
-
+const promptList = DummyPromptList;
 // Reactive variable to store the current word being typed
-const currentWord = ref('');
+const userInput = ref<string>("");
 
 // List to store completed words
-const wordList = ref<string[]>([]);
-const data = computed(() => {
-  const temp = processData(wordList.value, promptList);
-  console.log(temp);
-  return temp;
+const data = computed<WordModel[]>(() => {
+  return processData(userInput.value.split(" "), promptList);
 });
-
 
 // Function to handle input changes
 function handleInput(event: KeyboardEvent) {
   const key = event.key;
 
-  if (key === ' ') {
-    // Append the current word to the word list and clear the current word
-    wordList.value.push(currentWord.value);
-    currentWord.value = '';
-  } else if (key === 'Backspace') {
-    // Delete the last character of the current word
-    currentWord.value = currentWord.value.slice(0, -1);
-  } else {
-    // Add the typed character to the current word
-    currentWord.value += key;
+  if (key === 'Backspace') {
+    userInput.value = userInput.value.slice(0, -1);
+  } else if (/^[a-zA-Z0-9\s.,!?;:'"(){}[\]<>@#$%^&*-_=+|\\/~`€¢€]$/.test(key)) {
+    // Add alphanumeric characters (letters and numbers) to the current word
+    userInput.value += key;
   }
 }
 
@@ -46,11 +38,8 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <!-- Display the current word and completed words -->
-    <div>Current Word: {{ currentWord }}</div>
-    <div>Word List: {{ wordList }}</div>
-    <!-- <div>Output: {{ data }}</div> -->
-    <WordList :value="data" />
-    <!-- <div>Output: {{output}}</div> -->
+    <!-- <div>{{ userInput }}</div> -->
+    <WordList :value="data" :key="userInput.length"/>
   </div>
 </template>
 

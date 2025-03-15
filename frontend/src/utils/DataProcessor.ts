@@ -1,4 +1,4 @@
-import { LetterState, WordState } from "../enums/enums";
+import { LetterState, WordState } from "../enums/Enums";
 import { LetterModel } from "../models/Letter";
 import { WordModel } from "../models/Word";
 
@@ -30,6 +30,11 @@ export const processData = (inputList: string[], promptList: string[]): WordMode
         promptPointer = promptIterable.next();
     }
 
+    // check if past words are valid
+    for (let i = 0; i < inputList.length - 1; i++) {
+        processedData[i].validateState();
+    }
+
     return processedData;
 }
 
@@ -52,6 +57,7 @@ export const processWord = (input: string, prompt: string): WordModel => {
             categorizedLetters.push(new LetterModel(inputChar, LetterState.INCORRECT));
             promptPointer = promptIterable.next();
         }
+
     }
 
     while (!promptPointer.done) {
@@ -60,6 +66,6 @@ export const processWord = (input: string, prompt: string): WordModel => {
     }
 
     const word = new WordModel(categorizedLetters);
-    
+
     return word;
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LetterModel } from '../../../models/Letter';
-import { LetterState } from '../../../enums/enums';
+import { LetterState } from '../../../enums/Enums';
 
 const props = defineProps<{ value: LetterModel }>();
 const { value, state } = props.value;
@@ -11,8 +11,9 @@ const { value, state } = props.value;
     <!-- TODO: EXTRACT THEMING INTO GLOBAL ENUMS -->
     <span v-if="state === LetterState.CORRECT" class="text-stone-50">{{ value }}</span>
     <span v-else-if="state === LetterState.INCORRECT" class="text-red-400">{{ value }}</span>
-    <span v-else-if="state === LetterState.MISSING" class="text-grey-500">{{ value }}</span>
+    <span v-else-if="state === LetterState.MISSING" class="text-zinc-600">{{ value }}</span>
     <span v-else-if="state === LetterState.EXTRA" class="text-red-700">{{ value }}</span>
+    <span v-else-if="state === LetterState.CURSOR" class="text-yellow-700">{{ value }}</span>
 </template>
 
 <style scoped></style>

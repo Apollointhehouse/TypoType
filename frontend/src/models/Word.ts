@@ -1,5 +1,5 @@
 // src/models/Word.ts
-import { WordState, LetterState } from "../enums/enums";
+import { WordState, LetterState } from "../enums/Enums";
 import { LetterModel } from "./Letter";
 
 // Define the Word class
@@ -16,7 +16,15 @@ export class WordModel {
         this.state = newState;
     }
 
-    isCompleted() {
+    validateState() {
+        if (this.isCorrect()) {
+            this.state = WordState.CORRECT;
+        } else {
+            this.state = WordState.INCORRECT;
+        }
+    }
+
+    isCorrect() {
         return this.letters.every(letter => letter.state === LetterState.CORRECT);
     }
 
