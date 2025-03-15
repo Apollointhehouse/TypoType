@@ -3,13 +3,14 @@ import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {processData} from '../../utils/DataPreprocessor';
 import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
+import {WordModel} from '../../models/Word';
 
 const promptList = DummyPromptList;
 // Reactive variable to store the current word being typed
 const userInput = ref<string>("");
 
 // List to store completed words
-const data = computed(() => {
+const data = computed<WordModel[]>(() => {
   return processData(userInput.value.split(" "), promptList);
 });
 
