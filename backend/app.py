@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+from flask_cors import CORS 
 import db
 import os
 import secrets
@@ -9,6 +10,7 @@ from captcha import generate_captcha
 from captcha import check_captcha
 
 app = Flask(__name__)
+CORS(app)
 
 con = sqlite3.connect("data.db", check_same_thread=False)
 cur = con.cursor()
