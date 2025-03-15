@@ -2,14 +2,16 @@
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import {processData} from '../../utils/DataProcessor';
 import {DummyPrompt} from '../../enums/DummyPrompt';
-import {WordModel} from '../../models/Word';
+import {WordListModel} from '../../models/WordList';
 import WordList from './WordList/WordList.vue';
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
 import Footer from '../footer-components/Footer.vue';
 
-const TIME_LIMIT = 60;
+const TIMER_TIME_LIMIT = 10;
+const TIMER_INTERVAL = 1000;
 
 // Fetch the prompt from the backend
+
 const prompt = ref<string>(DummyPrompt);
 
 const getPrompt = async () =>{
@@ -19,6 +21,7 @@ const getPrompt = async () =>{
 }
 
 // Fetch the keymap from the backend
+
 interface Dictionary {
     [key: string]: string
 }
@@ -31,12 +34,15 @@ const getKeys = async () =>{
 
 const userInput = ref<string>("");
 
-// List to store completed words
-const data = computed<WordModel[]>(() => {
+// Data to display
+
+const data = computed<WordListModel>(() => {
   // const promptList = await getPrompt()
   const promptList = prompt.value.split(" ");
   return processData(userInput.value.split(" "), promptList);
 });
+
+// Progress management
 
 const progress = computed<{current: number, total: number}>(() => {
   const userInputList = userInput.value.split(" ");
@@ -44,8 +50,24 @@ const progress = computed<{current: number, total: number}>(() => {
   return {current: userInputList.length - 1, total: promptList.length};
 });
 
+// Score management
+
+const computeScore = (): {accuracy: number, wordsPerMinute: number, rawWordsPerMinute: number, letterCounts: {}} => {
+  const wordsCompleted = data.value.getWordsCompleted();
+  const wordsAttempted = data.value.getWordsAttempted();
+
+  const wordsPerMinute = Math.floor((wordsCompleted / TIMER_TIME_LIMIT) * 60);
+  const rawWordsPerMinute = Math.floor((wordsAttempted / TIMER_TIME_LIMIT) * 60);
+
+  const accuracy = data.value.getAccuracy();
+  const letterCounts = data.value.getLetterCounts();
+
+  return {accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts};
+};
+
 // Timer
-const timeLeft = ref<number>(TIME_LIMIT);
+
+const timeLeft = ref<number>(TIMER_TIME_LIMIT);
 const timerReference = ref<number>();
 
 const startTimer = () => {
@@ -53,10 +75,13 @@ const startTimer = () => {
     if (timeLeft.value > 0) {
       timeLeft.value--;
     } else {
-      stopTimer(); // Stop the timer once it reaches 0
-      window.alert("Time's up!");
+      stopTimer(); 
+
+      // TODO: Route to results page and display these metrics
+      let {accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts} = computeScore();
+      window.alert(`Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(letterCounts)}`); 
     }
-  }, 1000); // Update every second
+  }, TIMER_INTERVAL); 
 };
 
 const stopTimer = () => {
@@ -65,7 +90,7 @@ const stopTimer = () => {
 
 const restart = () => {
   stopTimer();
-  timeLeft.value = TIME_LIMIT;
+  timeLeft.value = TIMER_TIME_LIMIT;
   userInput.value = "";
   startTimer();
 }
@@ -95,6 +120,8 @@ function handleInput(event: KeyboardEvent) {
     lastInput = input;
   }
 }
+
+// TODO: Figure out lifecycle management and refine the logic
 
 onMounted(() => {
   document.addEventListener('keydown', handleInput);

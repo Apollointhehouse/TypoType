@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { WordModel } from '../../../models/Word';
+import { WordListModel } from '../../../models/WordList';
 import Word from './Word.vue';
 
-const props = defineProps<{ value: WordModel[] }>();
+const props = defineProps<{ value: WordListModel }>();
 
 </script>
 
 <template>
-    <template v-for="(word, index) in props.value" :key="index">
+    <template v-for="(word, index) in props.value.getWords()" :key="index">
         <Word :value="word" />
     </template>
 </template>

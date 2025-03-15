@@ -31,4 +31,24 @@ export class WordModel {
     addLetters(letters: string) {
         this.letters.push(...letters.split('').map(letter => new LetterModel(letter)));
     }
+
+    getLength() {
+        return this.letters.length;
+    }
+
+    getNumberOfCorrectLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.CORRECT).length;
+    }
+    
+    getNumberOfIncorrectLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.INCORRECT).length;
+    }
+
+    getNumberOfExtraLetters() {
+        return this.letters.filter(letter => letter.state === LetterState.EXTRA).length;
+    }
+
+    getNumberOfMissingLetters() {   
+        return this.letters.filter(letter => letter.state === LetterState.MISSING).length;
+    }
 }

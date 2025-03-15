@@ -1,6 +1,7 @@
 import { LetterState, WordState } from "../enums/enums";
 import { LetterModel } from "../models/Letter";
 import { WordModel } from "../models/Word";
+import { WordListModel } from "../models/WordList";
 
 function* createSimpleGenerator(values: any[] | string): Generator<any> {
     for (let value of values) {
@@ -8,8 +9,8 @@ function* createSimpleGenerator(values: any[] | string): Generator<any> {
     }
 }
 
-export const processData = (inputList: string[], promptList: string[]): WordModel[] => {
-    const processedData: WordModel[] = [];
+export const processData = (inputList: string[], promptList: string[]): WordListModel => {
+    const data = new WordListModel([]);
 
     const inputIterable = createSimpleGenerator(inputList);
     const promptIterable = createSimpleGenerator(promptList);
@@ -18,24 +19,22 @@ export const processData = (inputList: string[], promptList: string[]): WordMode
 
     for (const input of inputIterable) {
         if (promptPointer.done) {
-            processedData.push(processWord(input, ""));
+            data.addWord(processWord(input, ""));
         } else {
-            processedData.push(processWord(input, promptPointer.value));
+            data.addWord(processWord(input, promptPointer.value));
             promptPointer = promptIterable.next();
         }
     }
 
     while (!promptPointer.done) {
-        processedData.push(processWord("", promptPointer.value));
+        data.addWord(processWord("", promptPointer.value));
         promptPointer = promptIterable.next();
     }
 
     // check if past words are valid
-    for (let i = 0; i < inputList.length - 1; i++) {
-        processedData[i].validateState();
-    }
+    data.validateWords(inputList.length - 1);
 
-    return processedData;
+    return data;
 }
 
 export const processWord = (input: string, prompt: string): WordModel => {
