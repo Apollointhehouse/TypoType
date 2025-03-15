@@ -8,7 +8,7 @@
 
 import WordList from './WordList/WordList.vue';
 // import { WordModel } from '../../models/Word';
-import { processWord, processData } from '../../utils/InputDataProcessor';
+import { processWord, processData } from '../../utils/DataProcessor';
 
 // const testWordList = new Array<WordModel>();
 

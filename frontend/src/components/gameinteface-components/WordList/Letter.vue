@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LetterModel } from '../../../models/Letter';
-import { LetterState } from '../../../enums/enums';
+import { LetterState } from '../../../enums/Enums';
 
 const props = defineProps<{ value: LetterModel }>();
 const { value, state } = props.value;

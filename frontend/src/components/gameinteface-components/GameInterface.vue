@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
-import {processData} from '../../utils/InputDataProcessor';
+import {processData} from '../../utils/DataProcessor';
+import {DummyPromptList} from '../../enums/DummyPrompt';
 import WordList from './WordList/WordList.vue';
 
-const promptList: string[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.".split(" ");
-
+const promptList = DummyPromptList;
 // Reactive variable to store the current word being typed
 const currentWord = ref('');
 
@@ -21,16 +21,29 @@ const data = computed(() => {
 function handleInput(event: KeyboardEvent) {
   const key = event.key;
 
+  // Check if the key is a space, backspace, or alphanumeric character
   if (key === ' ') {
-    // Append the current word to the word list and clear the current word
-    wordList.value.push(currentWord.value);
-    currentWord.value = '';
+    // If there's any word in the list, update the last element with the current word
+    if (currentWord.value.trim() !== '') { // If the list is empty, add the first word
+      wordList.value.push('');
+      currentWord.value = ''; // Reset the current word
+    }
   } else if (key === 'Backspace') {
     // Delete the last character of the current word
     currentWord.value = currentWord.value.slice(0, -1);
-  } else {
-    // Add the typed character to the current word
+    if (wordList.value.length > 0) {
+      wordList.value[wordList.value.length - 1] = currentWord.value;
+    } else {
+      wordList.value.push(currentWord.value);
+    }
+  } else if (/^[a-zA-Z0-9]$/.test(key)) {
+    // Add alphanumeric characters (letters and numbers) to the current word
     currentWord.value += key;
+    if (wordList.value.length > 0) {
+      wordList.value[wordList.value.length - 1] = currentWord.value;
+    } else {
+      wordList.value.push(currentWord.value);
+    }
   }
 }
 
@@ -49,7 +62,7 @@ onBeforeUnmount(() => {
     <div>Current Word: {{ currentWord }}</div>
     <div>Word List: {{ wordList }}</div>
     <!-- <div>Output: {{ data }}</div> -->
-    <WordList :value="data" />
+    <WordList :value="data" :key="currentWord.length"/>
     <!-- <div>Output: {{output}}</div> -->
   </div>
 </template>

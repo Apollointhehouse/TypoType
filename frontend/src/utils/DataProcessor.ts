@@ -1,4 +1,4 @@
-import { LetterState, WordState } from "../enums/enums";
+import { LetterState, WordState } from "../enums/Enums";
 import { LetterModel } from "../models/Letter";
 import { WordModel } from "../models/Word";
 
