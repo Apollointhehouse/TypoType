@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
-import { useGameData } from "@/utils/gameDataUtils";
-import { useTimer } from "@/utils/timerUtils";
-import WordList from "@/components/gameinterface-components/wordlist-components/WordList.vue";
-import FlashingTitle from "@/components/gameinterface-components/animated-title-components/FlashingTitle.vue";
-import Footer from "@/components/gameinterface-components/footer-components/Footer.vue";
-import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
+import FlashingTitle from '@/components/gameinterface-components/animated-title-components/FlashingTitle.vue';
+import CheatSphere from '@/components/gameinterface-components/cheat-sphere-components/CheatSphere.vue';
+import Footer from '@/components/gameinterface-components/footer-components/Footer.vue';
+import WordList from '@/components/gameinterface-components/wordlist-components/WordList.vue';
+import { useGameData } from '@/utils/gameDataUtils';
+import { useTimer } from '@/utils/timerUtils';
+import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
+import { onBeforeUnmount, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 
 // Get game data and input handler from utils
 const {
+  keys,
   prompt,
   userInput,
   progress,
@@ -24,12 +26,9 @@ const router = useRouter();
 
 // Timer callback when time is up
 function onTimeUp() {
-  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } =
-    computeScore();
+  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } = computeScore();
   window.alert(
-    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(
-      letterCounts
-    )}`
+    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(letterCounts)}`
   );
   router.push("/scores");
 }
@@ -57,8 +56,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col items-center gap-2">
     <!-- Header with fancy title -->
+    <CheatSphere :keymap="keys" />
     <FlashingTitle value="T Y P O T Y P E" />
     <div class="flex flex-col gap-2">
       <div>{{ timeLeft }}</div>
@@ -70,13 +70,8 @@ onBeforeUnmount(() => {
     </div>
     <!-- Restart button -->
     <span class="group flex justify-center">
-      <svg
-        @click="restartGame"
-        width="20"
-        height="20"
-        fill="currentColor"
-        class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300"
-      >
+      <svg @click="restartGame" width="20" height="20" fill="currentColor"
+        class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300">
         <use :href="`${BootstrapIcons}#arrow-clockwise`" />
       </svg>
     </span>
