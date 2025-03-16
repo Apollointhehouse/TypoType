@@ -55,12 +55,10 @@ Start server
 Prepare apology speech for your friends when you ask them to try it
 <br>
 <br>
-Contributions
-<br>
-<br>
+## Contributions
+
 Pull requests are welcome, but honestly, why would you want your name associated with this?
-<br>
-<br>
+
 ## License
 MIT License, because we're generous enough to let others experience this keyboard nightmare legally.
 <br>
