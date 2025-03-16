@@ -64,6 +64,50 @@ def create_user():
         print(e)
     return Response(status=500)
 
+@app.route("/api/users/<int:user_id>", methods=["GET"])
+def get_user(user_id):
+    try:
+        # Fetch the user from the database
+        cur.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+        user = cur.fetchone()
+
+        if user:
+            # Convert the user data to a dictionary
+            user_data = {
+                "id": user[0],
+                "name": user[1]
+            }
+            return Response(json.dumps(user_data), status=200)
+        else:
+            return Response(json.dumps({"error": "User not found"}), status=404)
+    except Exception as e:
+        print(e)
+        return Response(json.dumps({"error": "Internal server error"}), status=500)
+
+@app.route("/api/users", methods=["GET"])
+def get_users():
+    try:
+        # Fetch all users from the database
+        cur.execute("SELECT * FROM users")
+        users = cur.fetchall()
+
+        if users:
+            # Convert the user data to a list of dictionaries
+            user_list = []
+            for user in users:
+                user_data = {
+                    "id": user[0],
+                    "name": user[1]
+                }
+                user_list.append(user_data)
+            
+            return Response(json.dumps(user_list), status=200)
+        else:
+            return Response(json.dumps({"error": "No users found"}), status=404)
+    except Exception as e:
+        print(e)
+        return Response(json.dumps({"error": "Internal server error"}), status=500)
+
 
 # Captcha
 @app.route("/captcha", methods=["POST"])
