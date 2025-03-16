@@ -35,7 +35,7 @@ def post_score():
     try:
         data = request.get_json()
 
-        res = cur.execute(f"INSERT INTO scores (user_id, score) values ({data.get('id')}, {data.get('score')})")
+        res = cur.execute("INSERT INTO scores (user_id, score) VALUES (?, ?)", (data.get('id'), data.get('score')))
         con.commit()
     except Exception as e:
         print(e)
@@ -56,7 +56,7 @@ def create_user():
     try:
         data = request.get_json()
 
-        res = cur.execute(f"INSERT INTO users (name) values ({data.get('name')})")
+        res = cur.execute(f"INSERT INTO users (name) values (?)", (data.get('name'),))
         con.commit()
 
         data['id'] = cur.lastrowid
