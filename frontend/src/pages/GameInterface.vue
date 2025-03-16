@@ -28,9 +28,12 @@ const { setUpSoundEventListeners } = useSound();
 
 // Timer callback when time is up
 function onTimeUp() {
-  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } = computeScore();
+  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } =
+    computeScore();
   window.alert(
-    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(letterCounts)}`
+    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(
+      letterCounts
+    )}`
   );
   router.push("/scores");
 }
