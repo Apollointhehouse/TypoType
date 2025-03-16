@@ -47,7 +47,6 @@ The app will immediately yeet you back to the start screen, obliterating your sc
 <br>
 <br>
 ## Contributions
-
 Pull requests are welcome, but honestly, why would you want your name associated with this?
 
 ## License
