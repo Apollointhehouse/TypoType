@@ -35,13 +35,3 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
-
-tasks.jar {
-    manifest.attributes["Main-Class"] = "me.apollointhehouse.ApplicationKt"
-    val dependencies = configurations
-        .runtimeClasspath
-        .get()
-        .map { zipTree(it) }
-    from(dependencies)
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}

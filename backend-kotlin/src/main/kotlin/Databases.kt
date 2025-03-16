@@ -9,13 +9,8 @@ import me.apollointhehouse.models.*
 import org.jetbrains.exposed.sql.Database
 import java.io.File
 
-val dbLocation: String = if (File("kotlin-backend").exists())
-    File("kotlin-backend/data.db").absolutePath
-else
-    File("data.db").absolutePath
-
 val database = Database.connect(
-    url = "jdbc:sqlite:$dbLocation",
+    url = "jdbc:sqlite:${File("backend-kotlin/data.db").absolutePath}",
     driver = "org.sqlite.JDBC",
 )
 
