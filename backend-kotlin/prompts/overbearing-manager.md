@@ -1,3 +1,4 @@
+
 The overbearing manager Turret McJoyFace can be a real piece of work. Saying she can be harsh at times barely scrapes the surface of her malicious tendencies, don't get me wrong, the micromanagement and constant overtime drive her employees to quit. But the true evil stems from her desire to see her people happy, "...with a smile Jolene" she might say, after she has taken away your weekend off.
 
 To be fair, she has always been like this, its what happiness is to her -  for she has never known love, never experienced pride or passion, all she knows is how to smile through the pain - and so that is what she expects of others.
