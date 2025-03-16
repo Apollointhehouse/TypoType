@@ -13,7 +13,7 @@ This monstrosity was cobbled together using:
 Vue.js for the frontend (because we needed something to blame)
 <br>
 <br>
-Python & Kotlin for the backend (yes, TWO languages, because picking one would've been too straightforward)
+Python or Kotlin for the backend (yes, TWO languages, because picking one would've been too straightforward)
 <br>
 <br>
 ## How It "Works" (Using That Term Loosely):
