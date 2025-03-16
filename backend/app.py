@@ -47,6 +47,7 @@ def get_highscores():
     cur.execute("SELECT * FROM scores ORDER BY score LIMIT 20")
     all_records = cur.fetchall()
     return Response(json.dumps(all_records), status=201)
+
 # Users
 
 @app.post("/api/users")
@@ -110,11 +111,12 @@ def get_users():
 
 
 # Captcha
-@app.route("/captcha", methods=["POST"])
+@app.route("/api/captcha", methods=["GET"])
 def get_captcha():
-    return Response(generate_captcha, status=201)
+    return Response(generate_captcha(), status=201)
 
-@app.route("/captcha", methods=["GET"])
-def verify_captcha(input_captcha):
-    return check_captcha(input_captcha)
-
+@app.route("/api/captcha", methods=["POST"])
+def verify_captcha():
+    input_captcha = request.form.get("userAnswer")
+    grab_captcha = request.form.get("captchaQuestion")
+    return check_captcha(input_captcha, grab_captcha)
