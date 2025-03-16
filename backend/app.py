@@ -6,8 +6,7 @@ import secrets
 import json
 import sqlite3
 from keymap import generate_keymap
-from captcha import generate_captcha
-from captcha import check_captcha
+from captcha import generate_captcha, check_captcha
 
 app = Flask(__name__)
 CORS(app)
