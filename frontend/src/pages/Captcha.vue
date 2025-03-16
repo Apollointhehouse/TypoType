@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Captcha from '../components/gameinteface-components/Captcha/Captcha.vue';
-
+import Captcha from '@/components/gameinterface-components/captcha-components/Captcha.vue';
 </script>
 
 <template>

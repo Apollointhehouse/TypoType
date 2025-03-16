@@ -26,9 +26,9 @@ export default {
         // Fetch CAPTCHA question from the backend
         const fetchCaptcha = async () => {
             const response = await fetch('http://localhost:5000/api/captcha');
-            console.log(response)
+            
             captchaQuestion.value = await response.text(); // Store question in reactive state
-        };
+        }
 
         // Submit CAPTCHA answer to backend for validation
         const submitCaptcha = async () => {
@@ -43,17 +43,14 @@ export default {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded', // Change the content type
                     },
-                    body: `userAnswer=${encodeURIComponent(userAnswer.value)}`, // Send plain text data
+                    body: `userAnswer=${encodeURIComponent(userAnswer.value)}&captchaQuestion=${encodeURIComponent(captchaQuestion.value)}`, // Send plain text data
                 });
-                const data = await response.text();
-                console.log(data)
+                const data = await response.json();
 
                 if (data.success) {
-                    console.log(true)
                     captchaVerified.value = true;
                     captchaError.value = false;
                 } else {
-                    console.log(false)
                     captchaVerified.value = false;
                     captchaError.value = true;
                 }
