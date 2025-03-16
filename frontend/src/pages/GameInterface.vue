@@ -7,6 +7,14 @@ import FlashingTitle from '@/components/gameinterface-components/animated-title-
 import Footer from '@/components/gameinterface-components/footer-components/Footer.vue';
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
 import CheatSphere from '@/components/gameinterface-components/cheat-sphere-components/CheatSphere.vue';
+import { onMounted, onBeforeUnmount } from "vue";
+import { useGameData } from "@/utils/gameDataUtils";
+import { useTimer } from "@/utils/timerUtils";
+import WordList from "@/components/gameinterface-components/wordlist-components/WordList.vue";
+import FlashingTitle from "@/components/gameinterface-components/animated-title-components/FlashingTitle.vue";
+import Footer from "@/components/gameinterface-components/footer-components/Footer.vue";
+import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
+import { useRouter } from "vue-router";
 
 // Get game data and input handler from utils
 const {
@@ -21,12 +29,18 @@ const {
   data,
 } = useGameData();
 
+const router = useRouter();
+
 // Timer callback when time is up
 function onTimeUp() {
-  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } = computeScore();
+  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } =
+    computeScore();
   window.alert(
-    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(letterCounts)}`
+    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(
+      letterCounts
+    )}`
   );
+  router.push("/scores");
 }
 
 // Timer management from utils
@@ -35,19 +49,19 @@ const { timeLeft, startTimer, stopTimer, resetTimer } = useTimer(onTimeUp);
 function restartGame() {
   fetchPrompt();
   stopTimer();
-  userInput.value = '';
+  userInput.value = "";
   resetTimer();
 }
 
 onMounted(() => {
-  document.addEventListener('keydown', handleKeyDown);
+  document.addEventListener("keydown", handleKeyDown);
   fetchPrompt();
   fetchKeys();
   startTimer();
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener('keydown', handleKeyDown);
+  document.removeEventListener("keydown", handleKeyDown);
 });
 </script>
 

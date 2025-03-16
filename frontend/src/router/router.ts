@@ -6,6 +6,7 @@ import VirtualKeyboard from "@/components/gameinterface-components/virtual-keybo
 import Footer from "@/components/gameinterface-components/footer-components/Footer.vue";
 import Score from "@/pages/Score.vue";
 import GodSphere from "@/components/gameinterface-components/cheat-sphere-components/CheatSphere.vue";
+import Captcha from "@/pages/Captcha.vue";
 
 const routes = [
   { path: "/", component: UserEntry },
@@ -14,6 +15,7 @@ const routes = [
   { path: "/footer", component: Footer },
   { path: "/scores", component: Score },
   { path: "/god-sphere", component: GodSphere },
+  { path: "/captcha", component: Captcha}
 ];
 
 const router = createRouter({
