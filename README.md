@@ -39,19 +39,11 @@ The app will immediately yeet you back to the start screen, obliterating your sc
 <br>
 <br>
 ## Installation Instructions
-Clone this repo
-<br>
-<br>
-Question your life choices
-<br>
-<br>
-npm install or whatever
-<br>
-<br>
-Start server
-<br>
-<br>
-Prepare apology speech for your friends when you ask them to try it
+1. Clone this repo
+2. Question your life choices
+3. Npm install or whatever
+4. Start server
+5. Prepare apology speech for your friends when you ask them to try it
 <br>
 <br>
 ## Contributions
