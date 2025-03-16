@@ -57,4 +57,4 @@ MIT License, because we're generous enough to let others experience this keyboar
 <br>
 <br>
 <br>
-"It's not bad design if it's intentionally frustrating!" - The developer who will remain anonymous for their own safety
+*"It's not bad design if it's intentionally frustrating!"*-The developer who will remain anonymous for their own safety

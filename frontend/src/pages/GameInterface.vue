@@ -8,6 +8,7 @@ import { useTimer } from '@/utils/timerUtils';
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
 import { onBeforeUnmount, onMounted } from 'vue';
 import { useRouter } from "vue-router";
+import { useSound } from '@/utils/soundUtils';
 
 // Get game data and input handler from utils
 const {
@@ -18,11 +19,12 @@ const {
   computeScore,
   fetchPrompt,
   fetchKeys,
-  handleKeyDown,
+  setUpGameEventListeners,
   data,
 } = useGameData();
 
 const router = useRouter();
+const { setUpSoundEventListeners } = useSound();
 
 // Timer callback when time is up
 function onTimeUp() {
@@ -47,15 +49,14 @@ function restartGame() {
 }
 
 onMounted(() => {
-  document.addEventListener("keydown", handleKeyDown);
   fetchPrompt();
   fetchKeys();
   startTimer();
 });
 
-onBeforeUnmount(() => {
-  document.removeEventListener("keydown", handleKeyDown);
-});
+setUpGameEventListeners();
+setUpSoundEventListeners();
+
 </script>
 
 <template>
