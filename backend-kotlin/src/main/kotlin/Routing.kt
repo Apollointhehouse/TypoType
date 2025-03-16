@@ -17,7 +17,7 @@ val keyMap get() =
 fun Application.configureRouting() {
     routing {
         get("/api/prompts") {
-            val files = File("backend-kotlin/prompts").listFiles()
+            val files = File("$baseDir/prompts").listFiles()
             val file = files.random()
             call.respond(Text(file.readText()))
         }
