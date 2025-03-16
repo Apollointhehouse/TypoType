@@ -24,21 +24,12 @@ const {
 
 const router = useRouter();
 
-const router = useRouter();
-
 // Timer callback when time is up
 function onTimeUp() {
-  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } =
-   
-    computeScore();
+  const { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts } = computeScore();
   window.alert(
-    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(
-      
-      letterCounts
-    
-    )}`
+    `Accuracy: ${accuracy}%\nWPM: ${wordsPerMinute}\nRAW WPM: ${rawWordsPerMinute}\nLetter counts: ${JSON.stringify(letterCounts)}`
   );
-  router.push("/scores");
   router.push("/scores");
 }
 
@@ -49,12 +40,10 @@ function restartGame() {
   fetchPrompt();
   stopTimer();
   userInput.value = "";
-  userInput.value = "";
   resetTimer();
 }
 
 onMounted(() => {
-  document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keydown", handleKeyDown);
   fetchPrompt();
   fetchKeys();
@@ -62,7 +51,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("keydown", handleKeyDown);
   document.removeEventListener("keydown", handleKeyDown);
 });
 </script>
