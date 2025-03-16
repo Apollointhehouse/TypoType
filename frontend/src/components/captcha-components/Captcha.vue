@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col items-center justify-center min-h-screen font-sans">
         <h1 class="text-3xl font-semibold text-gray-800 mb-6">CAPTCHA Verification</h1>
-        
+
         <div class="bg-white p-8 rounded-lg shadow-lg mb-6 w-80 comic-sans">
             <!-- Render CAPTCHA image -->
             <img :src="captchaImageUrl" :alt="captchaQuestion"
@@ -10,6 +10,9 @@
             <input type="text" v-model="userAnswer" placeholder="Enter your answer"
                 class="w-full p-3 text-lg border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
+
+        <!-- Loading icon, visible only when isLoading is true -->
+        <div v-if="isLoading" class="loading">Loading<span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></div>
 
         <button @click="submitCaptcha"
             class="w-48 p-3 text-lg bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Submit</button>
@@ -28,8 +31,9 @@ const router = useRouter();
 // Reactive state variables using ref
 const captchaQuestion = ref(' ');
 const userAnswer = ref('');
-const captchaVerified = ref(false);
 const captchaError = ref(false);
+const isLoading = ref(false);
+const captchaImageUrl = ref('') // To remove console warnings
 
 // Fetch CAPTCHA question from the backend
 const fetchCaptcha = async () => {
@@ -56,15 +60,15 @@ const submitCaptcha = async () => {
         const data = await response.json();
 
         if (data.success) {
-            console.log(true)
-            captchaVerified.value = true;
             captchaError.value = false;
 
+            isLoading.value = true;
             // Redirect to the success page using Vue Router
-            router.push('/');
+            setTimeout(() => {
+                isLoading.value = false;
+                router.push('/');
+            }, 20000);
         } else {
-            console.log(false)
-            captchaVerified.value = false;
             captchaError.value = true;
         }
     } catch (error) {
@@ -82,6 +86,48 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.loading {
+font-size: 20px;
+font-family: Arial, sans-serif;
+display: inline-block;
+}
+
+.loading span {
+animation: dots 1.5s infinite;
+}
+
+.loading span:nth-child(1) {
+animation-delay: 0s;
+}
+
+.loading span:nth-child(2) {
+animation-delay: 0.25s;
+}
+
+.loading span:nth-child(3) {
+animation-delay: 0.5s;
+}
+
+.loading span:nth-child(4) {
+animation-delay: 0.75s;
+}
+
+.loading span:nth-child(5) {
+animation-delay: 1s;
+}
+
+@keyframes dots {
+0% {
+    opacity: 0;
+}
+50% {
+    opacity: 1;
+}
+100% {
+    opacity: 0;
+}
+}
+
 .captcha-box img {
     margin: 10px;
 }
