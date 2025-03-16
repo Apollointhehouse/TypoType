@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-const TIMER_TIME_LIMIT = 60;
+const TIMER_TIME_LIMIT = 10;
 const TIMER_INTERVAL = 1000;
 
 export function useTimer(onTimeUp: () => void) {
