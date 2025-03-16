@@ -26,6 +26,7 @@
     "bootstrap-icons": "^1.11.3",
     "path": "^0.12.7",
     "three": "^0.174.0",
+    "tone": "^15.0.4",
     "vue-final-modal": "^4.5.5",
     "vue-router": "^4.5.0"
   }
