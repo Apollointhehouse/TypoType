@@ -6,9 +6,11 @@ import WordList from '@/components/gameinterface-components/wordlist-components/
 import FlashingTitle from '@/components/gameinterface-components/animated-title-components/FlashingTitle.vue';
 import Footer from '@/components/gameinterface-components/footer-components/Footer.vue';
 import BootstrapIcons from 'bootstrap-icons/bootstrap-icons.svg';
+import CheatSphere from '@/components/gameinterface-components/cheat-sphere-components/CheatSphere.vue';
 
 // Get game data and input handler from utils
 const {
+  keys,
   prompt,
   userInput,
   progress,
@@ -50,8 +52,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col items-center gap-2">
     <!-- Header with fancy title -->
+    <CheatSphere :keymap="keys" />
     <FlashingTitle value="T Y P O T Y P E" />
     <div class="flex flex-col gap-2">
       <div>{{ timeLeft }}</div>
@@ -63,13 +66,8 @@ onBeforeUnmount(() => {
     </div>
     <!-- Restart button -->
     <span class="group flex justify-center">
-      <svg
-        @click="restartGame"
-        width="20"
-        height="20"
-        fill="currentColor"
-        class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300"
-      >
+      <svg @click="restartGame" width="20" height="20" fill="currentColor"
+        class="cursor-pointer opacity-20 group-hover:opacity-80 transition-opacity duration-300">
         <use :href="`${BootstrapIcons}#arrow-clockwise`" />
       </svg>
     </span>
