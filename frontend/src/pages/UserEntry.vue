@@ -19,7 +19,8 @@ const openModal = () => {
     <div class="flex flex-col items-center">
       <UserModal v-model="showModal" />
 
-      <h1>Test your Might!</h1>
+      <h1>Test your (Typing) Might!</h1>
+      <br />
       <Giphy />
       <!-- ✅ Ensure button triggers modal -->
       <StartButton @click="openModal" class="w-[50%]" />

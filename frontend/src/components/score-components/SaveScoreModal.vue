@@ -12,7 +12,8 @@ const emit = defineEmits<{
 }>();
 
 const username = ref(localStorage.getItem("newUsername"));
-const score = ref(localStorage.getItem("gameScore"));
+const score = ref(JSON.parse(localStorage.getItem("gameScore") || "{}")); // Parse the score JSON string into an object
+const wordsPerMinute = ref(score.value.wordsPerMinute || 0); // Extract wordsPerMinute from the score object
 const router = useRouter();
 
 const closeModal = () => {
@@ -24,10 +25,10 @@ const saveScore = async () => {
   try {
     const response = await axios.post("http://localhost:5000/api/scores", {
       name: username.value,
-      score: score.value,
+      score: wordsPerMinute.value,
     });
     console.log("Score Saved: ", response.data);
-    emit("update:modelValue", false);
+    closeModal();
   } catch (error) {
     console.error("Failed to save score: ", error);
     alert("Failed to save score. Please try again");
@@ -35,7 +36,7 @@ const saveScore = async () => {
   }
 };
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Escape") {
+  if (event.key !== "Shift" && event.key !== "Control" && event.key !== "Alt") {
     closeModal(); // Clear localStorage, close modal, and redirect
   }
 };
