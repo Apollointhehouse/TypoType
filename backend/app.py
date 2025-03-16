@@ -43,9 +43,17 @@ def post_score():
 
 @app.route("/api/scores", methods=["GET"])
 def get_highscores():
-    cur.execute("SELECT * FROM scores ORDER BY score LIMIT 20")
+    cur.execute("""
+        SELECT scores.id, scores.user_id, scores.score, users.name 
+        FROM scores
+        JOIN users ON scores.user_id = users.id
+        ORDER BY scores.score DESC
+        LIMIT 20
+    """)
     all_records = cur.fetchall()
-    return Response(json.dumps(all_records), status=201)
+    print(all_records)
+    scores = [{"score": s[2], "name": s[3]} for s in all_records]
+    return Response(json.dumps(scores), status=201)
 
 # Users
 

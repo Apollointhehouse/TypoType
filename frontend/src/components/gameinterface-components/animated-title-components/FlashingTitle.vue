@@ -38,4 +38,8 @@ setInterval(() => {
 .flashingLetter {
   opacity: 0; /* Start with opacity 0 for the flashing effect */
 }
+
+h1 {
+  font-size: 2rem;
+}
 </style>
