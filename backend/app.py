@@ -35,7 +35,7 @@ def post_score():
     try:
         data = request.get_json()
 
-        res = cur.execute("INSERT INTO scores (id, score) VALUES (?, ?)", (data.get('id'), data.get('score')))
+        res = cur.execute("INSERT INTO scores (user_id, score) VALUES (?, ?)", (data.get('id'), data.get('score')))
         con.commit()
     except Exception as e:
         print(e)
