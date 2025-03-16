@@ -11,4 +11,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  server: {
+    host: '0.0.0.0',  // Make the Vite server accessible outside the container
+    port: 5173,        // Ensure the port matches your Docker port
+  },
 })
