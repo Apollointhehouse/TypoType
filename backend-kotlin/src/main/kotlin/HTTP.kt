@@ -15,6 +15,10 @@ fun Application.configureHTTP() {
         allowMethod(HttpMethod.Delete)
         allowMethod(HttpMethod.Patch)
         allowHeader(HttpHeaders.Authorization)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+        allowHeader(HttpHeaders.AccessControlAllowMethods)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
+        allowHeader(HttpHeaders.ContentType)
         anyHost()
     }
 
