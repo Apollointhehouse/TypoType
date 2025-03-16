@@ -16,6 +16,7 @@ Vue.js for the frontend (because we needed something to blame)
 Python or Kotlin for the backend (yes, TWO languages, because picking one would've been too straightforward)
 <br>
 <br>
+
 ## How It "Works" (Using That Term Loosely):
 
 Start the test and be greeted by a completely randomized keyboard layout.
@@ -38,6 +39,7 @@ Save your score (if you have any dignity left)
 The app will immediately yeet you back to the start screen, obliterating your score data faster than you can say "why would anyone design it this way?" This isn't a bug, it's a feature to keep you on your toes. You're welcome.
 <br>
 <br>
+
 ## Installation Instructions
 1. Clone this repo
 2. Question your life choices
@@ -46,6 +48,7 @@ The app will immediately yeet you back to the start screen, obliterating your sc
 5. Prepare apology speech for your friends when you ask them to try it
 <br>
 <br>
+
 ## Contributions
 Pull requests are welcome, but honestly, why would you want your name associated with this?
 
