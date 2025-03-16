@@ -13,6 +13,7 @@ const grabScores = async () => {
   try {
     const response = await axios.get("http://localhost:5000/api/scores");
     scores.value = response.data;
+    console.log(response.data)
   } catch (error) {
     console.error("Failed to load scores:", error);
     alert("Failed to Load Scores");

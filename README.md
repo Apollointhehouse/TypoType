@@ -2,7 +2,7 @@
 
 ## What Fresh Hell Is This?
 
-Welcome to TypoType! the typing test app deliberately engineered to make you question your life choices! Unlike those cozy, predictable typing tests that coddle you with consistent QWERTY layouts, we've decided that's WAY too easy.
+Welcome to TypoType! The typing test app deliberately engineered to make you question your life choices! Unlike those cozy, predictable typing tests that coddle you with consistent QWERTY layouts, we've decided that's WAY too easy.
 <br>
 <br>
 Instead, we randomize your keyboard layout for EVERY. SINGLE. ATTEMPT. Because who doesn't love a dash of existential crisis with their WPM score?
@@ -21,8 +21,7 @@ Python or Kotlin for the backend (yes, TWO languages, because picking one would'
 Start the test and be greeted by a completely randomized keyboard layout.
 <br>
 <br>
-Panic for a few seconds as you realize what's happening
-Try desperately to figure out which key is which before the timer runs out.
+Panic for a few seconds as you realize what's happening, while trying to desperately to figure out which key is which before the timer runs out.
 <br>
 <br>
 Get unceremoniously dumped to the scores page when time expires
@@ -40,19 +39,11 @@ The app will immediately yeet you back to the start screen, obliterating your sc
 <br>
 <br>
 ## Installation Instructions
-Clone this repo
-<br>
-<br>
-Question your life choices
-<br>
-<br>
-npm install or whatever
-<br>
-<br>
-Start server
-<br>
-<br>
-Prepare apology speech for your friends when you ask them to try it
+1. Clone this repo
+2. Question your life choices
+3. Npm install or whatever
+4. Start server
+5. Prepare apology speech for your friends when you ask them to try it
 <br>
 <br>
 ## Contributions
