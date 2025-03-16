@@ -28,7 +28,7 @@ const saveScore = async () => {
       score: wordsPerMinute.value,
     });
     console.log("Score Saved: ", response.data);
-    emit("update:modelValue", false);
+    closeModal();
   } catch (error) {
     console.error("Failed to save score: ", error);
     alert("Failed to save score. Please try again");
