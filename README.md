@@ -39,14 +39,13 @@ The app will immediately yeet you back to the start screen, obliterating your sc
 <br>
 <br>
 
-## Installation Instructions
+## Installation Instructions (only requirement is docker)
+
 1. Clone this repo
 2. Question your life choices
-3. Npm install or whatever
-4. Start server
-5. Prepare apology speech for your friends when you ask them to try it
-<br>
-<br>
+3. Run `docker-compose up` in project directory
+4. Prepare apology speech for your friends when you ask them to try it
+
 
 ## Contributions
 Pull requests are welcome, but honestly, why would you want your name associated with this?
