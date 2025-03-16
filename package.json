@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "gsap": "^3.12.7",
-    "three": "^0.174.0"
+    "three": "^0.174.0",
+    "tone": "^15.0.4"
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

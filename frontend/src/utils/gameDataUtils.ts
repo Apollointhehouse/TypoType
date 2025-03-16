@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { processData } from '@/utils/dataProcessingUtils';
 import { loadingPrompt } from '@/constants/loadingPrompt';
 import type { WordListModel } from '@/models/WordListModel';
@@ -46,32 +46,32 @@ export function useGameData() {
     const rawWordsPerMinute = Math.floor((wordsAttempted / TIMER_TIME_LIMIT) * 60);
     const accuracy = data.value.getAccuracy();
     const letterCounts = data.value.getLetterCounts();
-    
+
     const scoreData = { accuracy, wordsPerMinute, rawWordsPerMinute, letterCounts };
-    
+
     // Store in local storage
     localStorage.setItem('gameScore', JSON.stringify(scoreData));
-    
+
     return scoreData;
   }
 
   // Keyboard event handler
   function handleKeyDown(event: KeyboardEvent) {
     const { key } = event;
-  
+
     // Prevent consecutive spaces.
     if (key === ' ' && lastInput.value === ' ') return;
-  
+
     // Handle backspace.
     if (key === 'Backspace') {
       userInput.value = userInput.value.slice(0, -1);
       return;
     }
-  
+
     // Allowed characters pattern.
     const allowedKeyPattern = /^[a-zA-Z0-9\s.,!?;:'"(){}[\]<>@#$%^&*\-_=+|\\/~`€¢€]$/;
     if (!allowedKeyPattern.test(key)) return;
-  
+
     // Use key mapping if defined, preserving case.
     const lowerKey = key.toLowerCase();
     const mappedKey = keys.value[lowerKey];
@@ -80,10 +80,20 @@ export function useGameData() {
         ? mappedKey
         : mappedKey.toUpperCase()
       : key;
-  
+
     userInput.value += inputChar;
     lastInput.value = inputChar;
-  }  
+  }
+
+  function setUpGameEventListeners() {
+    onMounted(() => {
+      window.addEventListener('keydown', handleKeyDown);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('keydown', handleKeyDown);
+    });
+  }
 
   return {
     prompt,
@@ -94,6 +104,6 @@ export function useGameData() {
     data,
     progress,
     computeScore,
-    handleKeyDown,
+    setUpGameEventListeners
   };
 }

@@ -19,7 +19,7 @@ const router = useRouter();
 const closeModal = () => {
   localStorage.clear(); // Clear localStorage
   emit("update:modelValue", false); // Close the modal
-  router.push("/"); // Redirect to home page
+  router.push("/captcha"); // Redirect to home page
 };
 const saveScore = async () => {
   try {
