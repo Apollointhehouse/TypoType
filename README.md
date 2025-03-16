@@ -6,15 +6,14 @@ Welcome to TypoType! The typing test app deliberately engineered to make you que
 <br>
 <br>
 Instead, we randomize your keyboard layout for EVERY. SINGLE. ATTEMPT. Because who doesn't love a dash of existential crisis with their WPM score?
-Tech Stack (AKA Our Tower of Babel)
-This monstrosity was cobbled together using:
 <br>
+
+## Tech Stack (AKA Our Tower of Babel)
+This monstrosity was cobbled together using:
 <br>
 Vue.js for the frontend (because we needed something to blame)
 <br>
-<br>
 Python or Kotlin for the backend (yes, TWO languages, because picking one would've been too straightforward)
-<br>
 <br>
 
 ## How It "Works" (Using That Term Loosely):
