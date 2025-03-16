@@ -8,7 +8,8 @@
                 class="w-full max-w-xs mx-auto mb-6 border-2 border-gray-300 rounded-md" />
             <!-- User input field for CAPTCHA -->
             <input type="text" v-model="userAnswer" placeholder="Enter your answer"
-                class="w-full p-3 text-lg border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                class="w-full p-3 text-lg border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                @keydown.enter="submitCaptcha" />
         </div>
 
         <!-- Loading icon, visible only when isLoading is true -->
@@ -69,7 +70,12 @@ const submitCaptcha = async () => {
                 router.push('/');
             }, 20000);
         } else {
-            captchaError.value = true;
+            isLoading.value = true;
+
+            setTimeout(() => {
+                isLoading.value = false;
+                captchaError.value = true;
+            }, 7000);
         }
     } catch (error) {
         console.error('Error verifying CAPTCHA:', error);
