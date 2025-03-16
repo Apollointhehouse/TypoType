@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { VueFinalModal } from "vue-final-modal";
 import { useRouter } from "vue-router";
 import BootstrapIcons from "bootstrap-icons/bootstrap-icons.svg";
+import axios from "axios";
 
 defineProps<{ modelValue: boolean }>();
 
@@ -13,15 +14,24 @@ const router = useRouter();
 
 const newUsername = ref("");
 
-const addUsername = () => {
+const addUsername = async () => {
   if (newUsername.value.trim() !== "") {
     try {
-      localStorage.setItem("newUsername", JSON.stringify(newUsername.value));
-      console.log("Data saved to local storage:", newUsername.value);
+      // Send the username to the backend using Axios
+      const response = await axios.post("http://localhost:5000/api/users", {
+        name: newUsername.value,
+      });
+
+      console.log("Username saved to backend:", response.data);
+
+      // Save the username to localStorage (optional)
+      localStorage.setItem("newUsername", newUsername.value);
+
       emit("update:modelValue", false); // Close modal
       router.push("/type-test");
     } catch (error) {
-      console.error(error);
+      console.error("Error saving username:", error);
+      alert("An error occurred while saving the username.");
     }
   } else {
     alert("Please enter a name.");
