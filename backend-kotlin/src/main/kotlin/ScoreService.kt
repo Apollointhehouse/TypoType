@@ -1,23 +1,14 @@
 package me.apollointhehouse
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.Serializable
+import me.apollointhehouse.UserService.Users
 import me.apollointhehouse.models.Score
+import me.apollointhehouse.models.TopScore
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-
-@Serializable
-data class ExposedScore(
-    val id: Int,
-    val name: String,
-    val userId: Int,
-    val score: Int,
-    val timestamp: String
-)
 
 class ScoreService(database: Database) {
     object Scores : Table() {
@@ -43,20 +34,16 @@ class ScoreService(database: Database) {
     }
 
     suspend fun getTopScores() = dbQuery {
-        val formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS")
-
         Scores
-            .selectAll()
+            .join(
+                Users,
+                JoinType.INNER,
+                additionalConstraint = { Scores.userId eq Users.id }
+            )
+            .select(Scores.id, Scores.userId, Scores.score, Users.name, Scores.timestamp)
             .orderBy(Scores.score, order = SortOrder.DESC)
             .limit(20)
-            .map {
-                listOf(
-                    it[Scores.id],
-                    it[Scores.userId],
-                    it[Scores.score],
-                    it[Scores.timestamp].format(formatter)
-                ).toJsonElement()
-            }
+            .map { TopScore(it[Scores.score], it[Users.name]) }
     }
 
     private suspend fun <T> dbQuery(block: suspend () -> T): T =

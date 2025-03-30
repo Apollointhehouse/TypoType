@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import me.apollointhehouse.models.Text
+import me.apollointhehouse.models.PromptText
 import java.io.File
 
 // Generates keys based on ASCII
@@ -16,16 +16,21 @@ val keyMap get() =
 
 fun Application.configureRouting() {
     routing {
+        configureDatabases()
+
+        // Prompts
         get("/api/prompts") {
             val files = File("$baseDir/prompts").listFiles()
             val file = files.random()
-            call.respond(Text(file.readText()))
+            call.respond(PromptText(file.readText()))
         }
 
+        // Keymap
         get("/api/keymaps") {
             call.respond(keyMap)
         }
 
+        // Captcha
         post("/api/captcha") {
             call.respond(captcha)
         }

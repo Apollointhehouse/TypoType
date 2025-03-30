@@ -6,12 +6,12 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 import java.io.File
 
-val baseDir = File("backend-kotlin")
+val baseDir: String = File("backend-kotlin")
     .takeIf { it.exists() }
     ?.absolutePath
     ?: File(".").absolutePath
 
-fun main(args: Array<String>) {
+fun main() {
     embeddedServer(Netty, port = 5000) {
         routing {
             module()
@@ -22,5 +22,4 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureHTTP()
     configureRouting()
-    configureDatabases()
 }

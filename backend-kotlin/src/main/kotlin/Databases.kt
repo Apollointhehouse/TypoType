@@ -1,11 +1,10 @@
 package me.apollointhehouse
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import me.apollointhehouse.models.*
+import me.apollointhehouse.models.Score
 import org.jetbrains.exposed.sql.Database
 
 val database = Database.connect(
@@ -16,28 +15,32 @@ val database = Database.connect(
 val userService = UserService(database)
 val scoreService = ScoreService(database)
 
-fun Application.configureDatabases() {
-    routing {
-        post("/api/users") {
-            val user = call.receive<ExposedUser>()
-            println(user)
-            val id = userService.create(user)
-            println("id $id")
-            call.respond(HttpStatusCode.Created, User(user.name, id))
-        }
+// Sets up routes for API calls to DB
+fun Routing.configureDatabases() {
+    post("/api/users") {
+        val exposedUser = call.receive<ExposedUser>()
+        val user = userService.create(exposedUser)
+        call.respond(HttpStatusCode.Created, user)
+    }
 
-        post("/api/scores") {
-            val score = call.receive<Score>()
-            println("Adding score: $score")
-            scoreService.create(score)
-            call.respond(HttpStatusCode.Created)
-        }
+    get("/api/users/{user_id}") {
+        val id = call.parameters["user_id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+        val user = userService.getUser(id)
 
-        get("/api/scores") {
-            call.respond(
-                HttpStatusCode.Created,
-                scoreService.getTopScores()
-            )
-        }
+        call.respond(user ?: HttpStatusCode.NotFound)
+    }
+
+    post("/api/scores") {
+        val score = call.receive<Score>()
+        println("Adding score: $score")
+        scoreService.create(score)
+        call.respond(HttpStatusCode.Created, score)
+    }
+
+    get("/api/scores") {
+        call.respond(
+            HttpStatusCode.Created,
+            scoreService.getTopScores()
+        )
     }
 }
