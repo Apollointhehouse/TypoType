@@ -4,6 +4,8 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.util.*
+import me.apollointhehouse.database.dbRouting
 import me.apollointhehouse.models.PromptText
 import java.io.File
 
@@ -16,27 +18,29 @@ val keyMap get() =
 
 fun Application.configureRouting() {
     routing {
-        configureDatabases()
+        dbRouting()
 
-        // Prompts
         get("/api/prompts") {
             val files = File("$baseDir/prompts").listFiles()
             val file = files.random()
             call.respond(PromptText(file.readText()))
         }
 
-        // Keymap
         get("/api/keymaps") {
             call.respond(keyMap)
         }
 
-        // Captcha
-        post("/api/captcha") {
+        get("/api/captcha") {
             call.respond(captcha)
         }
 
-        get("/api/captcha") {
-            call.respond(checkCaptcha(call.receive()))
+        post("/api/captcha") {
+            val params = call.receiveParameters()
+
+            val captchaQuestion: String by params
+            val userAnswer: String by params
+
+            call.respond(checkCaptcha(captchaQuestion, userAnswer))
         }
     }
 }

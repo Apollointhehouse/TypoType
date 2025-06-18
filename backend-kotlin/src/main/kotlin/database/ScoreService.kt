@@ -1,12 +1,9 @@
-package me.apollointhehouse
+package me.apollointhehouse.database
 
-import kotlinx.coroutines.Dispatchers
-import me.apollointhehouse.UserService.Users
 import me.apollointhehouse.models.Score
 import me.apollointhehouse.models.TopScore
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
@@ -27,8 +24,10 @@ class ScoreService(database: Database) {
     }
 
     suspend fun create(score: Score): Int = dbQuery {
+        val id = userService.getID(score.name)
+
         Scores.insert { col ->
-            col[Scores.userId] = score.id
+            col[Scores.userId] = id
             col[Scores.score] = score.score
         }[Scores.id]
     }
@@ -36,16 +35,13 @@ class ScoreService(database: Database) {
     suspend fun getTopScores() = dbQuery {
         Scores
             .join(
-                Users,
+                UserService.Users,
                 JoinType.INNER,
-                additionalConstraint = { Scores.userId eq Users.id }
+                additionalConstraint = { Scores.userId eq UserService.Users.id }
             )
-            .select(Scores.id, Scores.userId, Scores.score, Users.name, Scores.timestamp)
+            .select(Scores.id, Scores.userId, Scores.score, UserService.Users.name, Scores.timestamp)
             .orderBy(Scores.score, order = SortOrder.DESC)
             .limit(20)
-            .map { TopScore(it[Scores.score], it[Users.name]) }
+            .map { TopScore(it[Scores.score], it[UserService.Users.name]) }
     }
-
-    private suspend fun <T> dbQuery(block: suspend () -> T): T =
-        newSuspendedTransaction(Dispatchers.IO) { block() }
 }
